@@ -24,14 +24,10 @@ public class DaKnifeScript : ActivatableObject {
 
             float distance = Vector3.Magnitude((transform.position - playerPosition) * .8f);
 
-
-                        
             //Create the bubble halfway between the object and the player.
-            GameObject bubble = (GameObject)GameObject.Instantiate(textBubblePrefab, playerPosition + distance * raycastSource.transform.forward, new Quaternion());
+            GameObject bubble = (GameObject)GameObject.Instantiate(textBubblePrefab, playerPosition + distance * raycastSource.transform.forward + new Vector3(0, 1, 0), new Quaternion());
 
             bubble.GetComponent<TextBubbleScript>().fullMessage = message;
-
-
 
         }
 
