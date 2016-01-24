@@ -381,7 +381,7 @@ GameObject:
   - 33: {fileID: 269553522}
   - 64: {fileID: 269553521}
   - 23: {fileID: 269553520}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -474,6 +474,42 @@ Transform:
   - {fileID: 37214582}
   m_Father: {fileID: 0}
   m_RootOrder: 5
+--- !u!1 &393350187 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 178304, guid: 3db6e3687bba4497ea7ef95b1b639751, type: 2}
+  m_PrefabInternal: {fileID: 1784869659}
+--- !u!114 &393350191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 393350187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2b400a249f884b43ac7d4df66b83899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isActive: 0
+  triggered: 0
+  numTimes: 0
+  textBubblePrefab: {fileID: 105838, guid: eb8d818da9ca65b4e9680a6b03ed4aed, type: 2}
+  raycastSource: {fileID: 1159905926}
+  directionalLight: {fileID: 2093611230}
+  pointLight: {fileID: 37214581}
+  planeObject: {fileID: 1418510479}
+  message: That's \n better
+--- !u!65 &393350192
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 393350187}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.010982151, y: 0.40404347, z: 0.48819607}
+  m_Center: {x: 0.000000049360093, y: -0.000000014901159, z: 0.000000059604645}
 --- !u!1 &463184933 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 113312, guid: 3db6e3687bba4497ea7ef95b1b639751, type: 2}
@@ -675,7 +711,7 @@ Light:
   serializedVersion: 6
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
+  m_Intensity: 0.87
   m_Range: 10
   m_SpotAngle: 30
   m_CookieSize: 10
@@ -709,8 +745,8 @@ GameObject:
   - 33: {fileID: 1418510483}
   - 64: {fileID: 1418510482}
   - 23: {fileID: 1418510481}
-  m_Layer: 0
-  m_Name: Plane
+  m_Layer: 2
+  m_Name: White Layer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
