@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class GuitarScript : ActivatableObject {
@@ -24,8 +24,8 @@ public class GuitarScript : ActivatableObject {
 			float distanceOne = Vector3.Magnitude((transform.position - playerPosition) * .8f);
 			
 			//Create the bubble halfway between the object and the player.
-			GameObject bubbleOne = (GameObject)GameObject.Instantiate(textBubblePrefab, playerPosition + distanceOne * raycastSource.transform.forward, new Quaternion());
-			GameObject bubbleTwo = (GameObject)GameObject.Instantiate(textBubblePrefab, playerPosition + distanceOne * raycastSource.transform.forward + new Vector3(0,-4,-5), new Quaternion());
+			GameObject bubbleOne = (GameObject)GameObject.Instantiate(textBubblePrefab, playerPosition + distanceOne * raycastSource.transform.forward + new Vector3(-2,2,-1), new Quaternion());
+			GameObject bubbleTwo = (GameObject)GameObject.Instantiate(textBubblePrefab, playerPosition + distanceOne * raycastSource.transform.forward + new Vector3(2,2,1), new Quaternion());
 
 			bubbleOne.GetComponent<TextBubbleScript>().fullMessage = messageOne;
 			bubbleTwo.GetComponent<TextBubbleScript>().fullMessage = messageTwo;
