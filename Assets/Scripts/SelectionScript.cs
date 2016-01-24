@@ -40,11 +40,11 @@ public class SelectionScript : MonoBehaviour {
                 activatedObject = hitInfo.transform.gameObject.GetComponent<ActivatableObject>();
             }
 
-            else if (activatedObject != null)
+            /*else if (activatedObject != null)
             {
                 activatedObject.Deactivate();
                 activatedObject = null;
-            }
+            }*/
         }
 
         else if (activatedObject != null)
