@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 430754}
   - 114: {fileID: 11491862}
   - 95: {fileID: 9521000}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Text Bubble
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27,7 +27,7 @@ GameObject:
   - 4: {fileID: 482362}
   - 23: {fileID: 2382876}
   - 102: {fileID: 10282364}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Text Box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,7 +43,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 424572}
   - 212: {fileID: 21244278}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: 05_shout-bubble
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59,7 +59,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 405694}
   - 212: {fileID: 21293162}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: bulle_bubble_116076 copy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -75,7 +75,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 449048}
   - 212: {fileID: 21223074}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: fbeKg copy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -91,7 +91,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 437190}
   - 212: {fileID: 21242276}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: cartoon-thought-bubble-md
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -107,7 +107,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 457442}
   - 212: {fileID: 21244482}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: 6478-illustration-of-a-cartoon-thought-bubble-balloon-pv
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -123,7 +123,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 409978}
   - 212: {fileID: 21298820}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: person-thinking-with-thought-bubble-bigstock_thought_bubble_4573249 copy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -508,6 +508,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
