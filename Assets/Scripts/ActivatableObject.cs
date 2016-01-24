@@ -11,6 +11,8 @@ public abstract class ActivatableObject : MonoBehaviour {
     public bool triggered = false;
     public int numTimes = 0;
 
+    public Object textBubblePrefab;
+
     // Use this for initialization
     void Start () {
 	

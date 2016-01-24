@@ -4,7 +4,7 @@ using System.Collections;
 public class TextBubbleScript : MonoBehaviour {
 
     public GameObject[] bubbleSprites;
-    public GameObject raycastSource;
+    private GameObject raycastSource;
 
     public float cloudShiftTime = .1f;
     public float textSpeed = .1f;
@@ -14,7 +14,9 @@ public class TextBubbleScript : MonoBehaviour {
 
     private int activeCloudIndex = 0;
 
-    //Message.
+    public float timeAfterDoneToDestroy = 2f;
+
+    //Message variables
     public string fullMessage;
     public string messageSoFar;
 
@@ -22,10 +24,13 @@ public class TextBubbleScript : MonoBehaviour {
 
     public TextMesh textBox;
 
-	// Use this for initialization
-	void Start () {
+    public Animator animator;
+
+    // Use this for initialization
+    void Start () {
 	    fullMessage = fullMessage.Replace("\\n", "\n");
-        Debug.Log(fullMessage);
+        raycastSource = GameObject.Find("Raycast Source");
+        animator = GetComponent<Animator>();
     }
 	
 	// Update is called once per frame
@@ -45,14 +50,22 @@ public class TextBubbleScript : MonoBehaviour {
             //Show new cloud.
             activeCloudIndex = (activeCloudIndex + 1) % (bubbleSprites.Length);
             bubbleSprites[activeCloudIndex].SetActive(true);
-            bubbleSprites[activeCloudIndex].transform.Rotate(0, 0, 10f);
+            //bubbleSprites[activeCloudIndex].transform.Rotate(0, 0, 10f);
         }
 
+        //Add new character if time has elapsed and there are characters left.
         if (timeSinceLastCharacter < 0f && ((currentStringLength)  != fullMessage.Length))
         {
             timeSinceLastCharacter = textSpeed;
             messageSoFar = fullMessage.Substring(0, ++currentStringLength);
             textBox.text = messageSoFar;
+
+            //The last one. Destroy in a bit.
+            if ((currentStringLength) == fullMessage.Length)
+            {
+                animator.SetBool("Ending", true);
+                Destroy(this.gameObject, timeAfterDoneToDestroy);
+            }
         }
 	}
 }

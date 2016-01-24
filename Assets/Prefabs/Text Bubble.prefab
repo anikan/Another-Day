@@ -9,6 +9,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 430754}
   - 114: {fileID: 11491862}
+  - 95: {fileID: 9521000}
   m_Layer: 0
   m_Name: Text Bubble
   m_TagString: Untagged
@@ -160,7 +161,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 154592}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 2.53, z: -1.62}
   m_LocalScale: {x: 1.7304251, y: 2.6346803, z: 2.6346803}
   m_Children: []
   m_Father: {fileID: 430754}
@@ -172,8 +173,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 105838}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.2223215, y: 1.0563612, z: 8.697001}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 1.9751706, y: 8.680143, z: -1.4503441}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 457442}
   - {fileID: 424572}
@@ -227,7 +228,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 134340}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: -0.00000016292068}
-  m_LocalPosition: {x: 1.45, y: 2.16, z: 0.84}
+  m_LocalPosition: {x: 2.5, y: 3.48, z: 0.33}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children: []
   m_Father: {fileID: 430754}
@@ -258,6 +259,23 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
+--- !u!95 &9521000
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 105838}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 97163009f3bf458409e6bfe7e3e6b0c9, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!102 &10282364
 TextMesh:
   serializedVersion: 3
@@ -293,12 +311,13 @@ MonoBehaviour:
   bubbleSprites:
   - {fileID: 165328}
   - {fileID: 154592}
-  raycastSource: {fileID: 0}
   cloudShiftTime: 0.1
-  textSpeed: 0.1
+  textSpeed: 0.05
+  timeAfterDoneToDestroy: 2
   fullMessage: I need \n Gummy Vitamins
   messageSoFar: 
   textBox: {fileID: 10282364}
+  animator: {fileID: 0}
 --- !u!212 &21223074
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -485,7 +504,11 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 105838}
