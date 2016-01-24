@@ -14,7 +14,7 @@ public class TextBubbleScript : MonoBehaviour {
 
     private int activeCloudIndex = 0;
 
-    public float timeAfterDoneToDestroy = 2f;
+    public float timeAfterDoneToDestroy = 100f;
 
     //Message variables
     public string fullMessage;
