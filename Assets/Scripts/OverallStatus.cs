@@ -3,7 +3,14 @@ using System.Collections;
 
 public class OverallStatus : MonoBehaviour {
 
-    public static bool phoneCompleted;
+    public enum phoneCompleted
+    {
+        Nothing, Fine, Help, Ignore
+    };
+
+    public static phoneCompleted phoneStatus;
+
+    public static bool doorChecked;
 
 
 	// Use this for initialization

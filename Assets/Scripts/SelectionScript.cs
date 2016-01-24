@@ -26,7 +26,10 @@ public class SelectionScript : MonoBehaviour {
 
             //Check if there is an object directly ahead and that it has the activate script.
             RaycastHit hitInfo;
-            if (Physics.Raycast(transform.position, reticle.transform.position, out hitInfo, 1000) && hitInfo.transform.gameObject.GetComponent<ActivatableObject>() != null)
+            
+            Physics.Raycast(transform.position, transform.forward, out hitInfo, 1000);
+
+            if (Physics.Raycast(transform.position, transform.forward, out hitInfo, 1000) && hitInfo.transform.gameObject.GetComponent<ActivatableObject>() != null)
             {
                 if (hitInfo.transform.gameObject != activatedObject && activatedObject != null)
                 {

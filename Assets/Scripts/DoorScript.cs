@@ -3,6 +3,8 @@ using System.Collections;
 
 public class DoorScript : ActivatableObject {
 
+    public GameObject raycastSource;
+    public string message= "I don't think \nthat's a \ngood idea";
 	// Use this for initialization
 	void Start () {
 	
@@ -16,12 +18,14 @@ public class DoorScript : ActivatableObject {
             triggered = true;
             numTimes++;
 
-            Vector3 result = new Vector3 (transform.position.x * .8f, transform.position.y, transform.position.z * .8f);
+            Vector3 playerPosition = raycastSource.transform.position;
 
+            float distance = Vector3.Magnitude((transform.position - playerPosition) * .8f);
+                
             //Create the bubble halfway between the object and the player.
-            GameObject bubble = (GameObject)GameObject.Instantiate(textBubblePrefab, result, new Quaternion());
+            GameObject bubble = (GameObject)GameObject.Instantiate(textBubblePrefab, playerPosition + distance * raycastSource.transform.forward, new Quaternion());
 
-            bubble.GetComponent<TextBubbleScript>().fullMessage = "I don't think \nthat's a \ngood idea";
+            bubble.GetComponent<TextBubbleScript>().fullMessage = message;
         }
 
         //Turn off the triggering
