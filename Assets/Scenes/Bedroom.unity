@@ -513,7 +513,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &381469754
 Transform:
   m_ObjectHideFlags: 0
@@ -527,7 +527,7 @@ Transform:
   - {fileID: 2093611232}
   - {fileID: 37214582}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
 --- !u!1 &393350187 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 178304, guid: 3db6e3687bba4497ea7ef95b1b639751, type: 2}
@@ -584,7 +584,7 @@ MonoBehaviour:
   numTimes: 0
   textBubblePrefab: {fileID: 105838, guid: eb8d818da9ca65b4e9680a6b03ed4aed, type: 2}
   raycastSource: {fileID: 1159905926}
-  message: "I don't think \nthat's a \ngood idea"
+  message: I don't \nwant to go \nout
 --- !u!65 &463184935
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -909,7 +909,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 430754, guid: eb8d818da9ca65b4e9680a6b03ed4aed, type: 2}
       propertyPath: m_RootOrder
-      value: 5
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 105838, guid: eb8d818da9ca65b4e9680a6b03ed4aed, type: 2}
       propertyPath: m_IsActive
@@ -983,6 +983,94 @@ Light:
   m_ShadowRadius: 0
   m_ShadowAngle: 0
   m_AreaSize: {x: 1, y: 1}
+--- !u!1001 &1264955835
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 400000, guid: 9d706139eb8c947cca0d65dc701dbcfc, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -2.1581948
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 9d706139eb8c947cca0d65dc701dbcfc, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 5.237
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 9d706139eb8c947cca0d65dc701dbcfc, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 8.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 9d706139eb8c947cca0d65dc701dbcfc, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 9d706139eb8c947cca0d65dc701dbcfc, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 9d706139eb8c947cca0d65dc701dbcfc, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 9d706139eb8c947cca0d65dc701dbcfc, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071067
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 9d706139eb8c947cca0d65dc701dbcfc, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 9d706139eb8c947cca0d65dc701dbcfc, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 9d706139eb8c947cca0d65dc701dbcfc, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 9d706139eb8c947cca0d65dc701dbcfc, type: 2}
+      propertyPath: m_LocalScale.z
+      value: 5
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 9d706139eb8c947cca0d65dc701dbcfc, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1 &1264955836 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 100000, guid: 9d706139eb8c947cca0d65dc701dbcfc, type: 2}
+  m_PrefabInternal: {fileID: 1264955835}
+--- !u!114 &1264955837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1264955836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2b3a57189ceb4bea8f256f63a9c8b4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isActive: 0
+  triggered: 0
+  numTimes: 0
+  textBubblePrefab: {fileID: 105838, guid: eb8d818da9ca65b4e9680a6b03ed4aed, type: 2}
+  raycastSource: {fileID: 1159905926}
+  messageOne: My diary...
+  messageTwo: "I don't \n write \n anymore"
+--- !u!65 &1264955838
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1264955836}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.21449068, y: 0.28000003, z: 0.019591793}
+  m_Center: {x: 0.004076045, y: 0.00000011175871, z: 0.009621486}
 --- !u!1001 &1280916173
 Prefab:
   m_ObjectHideFlags: 0
@@ -1070,6 +1158,84 @@ MonoBehaviour:
   textBubblePrefab: {fileID: 105838, guid: eb8d818da9ca65b4e9680a6b03ed4aed, type: 2}
   raycastSource: {fileID: 1159905926}
   message: '...'
+--- !u!1 &1283007350 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 143260, guid: 3bab73212ee8d8d4fa84254d1ba02fc2, type: 2}
+  m_PrefabInternal: {fileID: 4877478}
+--- !u!82 &1283007351
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1283007350}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 33dcb27fe6ed3439ea3b03aad2d0f167, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!1 &1324302134 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 170924, guid: 652f1b1c2ef586f45ac26a1ddffab296, type: 2}
@@ -1082,7 +1248,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1324302134}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6edc52c6507df4f66a788cfbdbaa0ba9, type: 3}
+  m_Script: {fileID: 11500000, guid: c12326d6dde1e41a5890e4fd502a24ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isActive: 0
@@ -1090,8 +1256,8 @@ MonoBehaviour:
   numTimes: 0
   textBubblePrefab: {fileID: 105838, guid: eb8d818da9ca65b4e9680a6b03ed4aed, type: 2}
   raycastSource: {fileID: 1159905926}
-  messageOne: I used \n to play...
-  messageTwo: Just not \n fun \n anymore \n
+  messageOne: "I used \nto play..."
+  messageTwo: "Just not \\nfun\n anymore."
 --- !u!1 &1418510479
 GameObject:
   m_ObjectHideFlags: 0

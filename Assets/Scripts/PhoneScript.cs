@@ -4,9 +4,13 @@ using System.Collections;
 public class PhoneScript : ActivatableObject {
 
     public GameObject raycastSource;
+     private float locationThreshold = .01f;
+    private Vector3 destination = new Vector3(.5f, -.1f, 1.5f);
+    public float speed = 2f;
+    private bool isMoving = false;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 	
 	}
 	
@@ -18,13 +22,22 @@ public class PhoneScript : ActivatableObject {
             triggered = true;
             numTimes++;
             transform.parent = raycastSource.transform;
+            transform.localRotation = Quaternion.Euler(0, 90, 90);
+            transform.localPosition = new Vector3(.5f, -1f, 1.5f);
+            isMoving = true;
 
         }
 
-        //Turn off the triggering
-        else if (!isActive && triggered)
+        //Move phone to view for convo.
+        if (isMoving)
         {
             triggered = false;
+            transform.localPosition = Vector3.MoveTowards(transform.localPosition, destination, speed * Time.deltaTime);
+
+            if (Vector3.Distance(transform.position, destination) < locationThreshold)
+            {
+                isMoving = false;
+            }
         }
     }
 }

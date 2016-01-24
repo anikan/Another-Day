@@ -283,7 +283,7 @@ TextMesh:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 134340}
-  m_Text: "Hello \nWorld"
+  m_Text: 
   m_OffsetZ: 0
   m_CharacterSize: 1
   m_LineSpacing: 1
@@ -314,7 +314,7 @@ MonoBehaviour:
   cloudShiftTime: 0.1
   textSpeed: 0.05
   timeAfterDoneToDestroy: 2
-  fullMessage: I need \n Gummy Vitamins
+  fullMessage: 
   messageSoFar: 
   textBox: {fileID: 10282364}
   animator: {fileID: 0}
@@ -512,6 +512,14 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_Layer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: fullMessage
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Text
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
