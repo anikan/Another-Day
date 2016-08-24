@@ -55,5 +55,15 @@ public abstract class ActivatableObject : MonoBehaviour {
 
         bubble.transform.SetParent(this.transform, true);
         bubble.transform.localPosition = offset;
+        bubble.transform.SetParent(null);
+
+        SpringJoint joint = this.gameObject.AddComponent<SpringJoint>();
+        joint.connectedBody = bubble.GetComponent<Rigidbody>();
+        joint.spring = 10f;
+        joint.damper = 10f;
+        //joint.maxDistance = 3;
+        joint.anchor = offset;
+
+        
     }
 }
