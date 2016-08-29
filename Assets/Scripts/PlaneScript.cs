@@ -3,8 +3,6 @@ using System.Collections;
 
 public class PlaneScript : ActivatableObject {
 
-    public GameObject raycastSource;
-
     public GameObject directionalLight;
     public GameObject pointLight;
 

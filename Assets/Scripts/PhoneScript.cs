@@ -1,42 +1,41 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
-public class PhoneScript : ActivatableObject {
+public class PhoneScript : ActivatableObject
+{
+    public List<MessageScript> messages;
+    public GameObject ownMessagePrefab;
+    public GameObject otherMessagePrefab;
 
-    private float locationThreshold = .01f;
-    private Vector3 destination = new Vector3(.5f, -.1f, 1.5f);
-    public float speed = 2f;
-    private bool isMoving = false;
+    public Vector3 messageStartLocation;
 
     // Use this for initialization
-    void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {        
+    void Start()
+    {
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
         //Trigger the effect if not previously triggered this activation.
         if (isActive && !triggered)
         {
             triggered = true;
-            numTimes++;
-            transform.parent = raycastSource.transform;
-            transform.localRotation = Quaternion.Euler(0, 90, 90);
-            transform.localPosition = new Vector3(.5f, -1f, 1.5f);
-            isMoving = true;
+        }
+    }
 
+    void SendMessage(bool isOwn, string message)
+    {
+        if (isOwn)
+        {
+           // GameObject.Instantiate(ownMessagePrefab, this.transform, false, );
         }
 
-        //Move phone to view for convo.
-        if (isMoving)
+        else
         {
-            triggered = false;
-            transform.localPosition = Vector3.MoveTowards(transform.localPosition, destination, speed * Time.deltaTime);
-
-            if (Vector3.Distance(transform.position, destination) < locationThreshold)
-            {
-                isMoving = false;
-            }
+           // GameObject.Instantiate(otherMessagePrefab, this.transform, false, )
         }
     }
 }
