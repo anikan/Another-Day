@@ -11,13 +11,22 @@ public class PhoneScript : ActivatableObject
     public GameObject ownMessagePrefab;
     public GameObject otherMessagePrefab;
 
-    public Vector3 messageStartLocation;
+    private Vector3 ownMessageStartLocation = new Vector3(19, 0, 1.4f);
+    private Vector3 otherMessageStartLocation = new Vector3(-19,0, 1.4f);
 
-    float bubbleOffset = 20;
+    const float FIRST_MESSAGE_HEIGHT = -2.5f;
+    float nextMessageHeight = FIRST_MESSAGE_HEIGHT;
+
+    //Distance between text and the bubble
+    float textOffset = 5;
+
+    //Distance between bubbles.
+    float bubbleOffset = 5;
 
     // Use this for initialization
     void Start()
     {
+
     }
 
     // Update is called once per frame
@@ -33,45 +42,73 @@ public class PhoneScript : ActivatableObject
         {
             SendMessage(true, "Oh Sad soul. Bio is slightly better imo\nw\nefwe");
         }
+
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            SendMessage(false, "Pls sceptile is cool\nw\nefwe");
+        }
     }
 
     void SendMessage(bool isOwn, string message)
     {
+        GameObject messageObject;
+        Vector3 messagePosition;
+
         if (isOwn)
         {
-            GameObject messageObject = (GameObject) GameObject.Instantiate(ownMessagePrefab, this.transform, false);
-            messageObject.transform.parent = phoneCanvas.transform;
-
-
-            //First get the size of the text.
-            Text text = messageObject.GetComponentInChildren<Text>();
-            TextGenerator textGen = text.cachedTextGenerator;
-
-            float textHeight = textGen.GetPreferredHeight(message, text.GetGenerationSettings(text.rectTransform.rect.size));
-
-            //Then update the image and the text itself.
-            //Image
-            RectTransform messageRect = messageObject.GetComponent<RectTransform>();
-
-            Vector2 newRectSize = messageRect.sizeDelta + new Vector2(0, textHeight + bubbleOffset);
-
-            messageRect.sizeDelta = new Vector2(newRectSize.x, newRectSize.y);
-
-            //Text
-            newRectSize = text.rectTransform.sizeDelta + new Vector2(0, textHeight + bubbleOffset);
-
-            text.rectTransform.sizeDelta = new Vector2(newRectSize.x, newRectSize.y);
-
-            text.text = message;
+            messageObject = (GameObject) GameObject.Instantiate(ownMessagePrefab, contentCanvas.transform, true);
+            messagePosition = ownMessageStartLocation;
         }
 
         else
         {
-           // GameObject.Instantiate(otherMessagePrefab, this.transform, false, )
+            messageObject = (GameObject)GameObject.Instantiate(otherMessagePrefab, contentCanvas.transform, true);
+            messagePosition = otherMessageStartLocation;
+
+            // GameObject.Instantiate(otherMessagePrefab, this.transform, false, )
 
             //Vibrate
             //Scroll down.
             //Play sound.
         }
+
+        //First get the size of the text.
+        Text text = messageObject.GetComponentInChildren<Text>();
+        text.text = message;
+
+        float textHeight = text.preferredHeight;
+
+        //Then update the image and the text itself.
+        //Image
+        RectTransform messageRect = messageObject.GetComponent<RectTransform>();
+
+        Vector2 newRectSize = messageRect.sizeDelta;
+        newRectSize.y = textHeight + textOffset;
+
+        messageRect.sizeDelta = new Vector2(newRectSize.x, newRectSize.y);
+
+        //Text
+        newRectSize = text.rectTransform.sizeDelta;
+        newRectSize.y = textHeight;
+
+        text.rectTransform.sizeDelta = new Vector2(newRectSize.x, newRectSize.y);
+
+        //Set position of message.
+        messagePosition += new Vector3(0, nextMessageHeight, 0);
+        messageObject.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+        messageObject.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 0));
+
+        //Need to reset z to 0.
+        messageObject.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
+        messageRect.anchoredPosition = messagePosition;
+
+        nextMessageHeight -= (textHeight + textOffset + bubbleOffset);
+
+        //Increase size of content.
+        RectTransform contentRect = contentCanvas.GetComponent<RectTransform>();
+
+        Vector2 contentSize = contentRect.sizeDelta;
+        contentSize.y += textHeight + textOffset + bubbleOffset;
+        contentRect.sizeDelta = contentSize;
     }
 }
