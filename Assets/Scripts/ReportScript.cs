@@ -2,10 +2,9 @@
 using System.Collections;
 
 public class ReportScript : ActivatableObject {
-	
-	public GameObject raycastSource;
-	public string messageOne= "How did \nthis \nhappen...";
-	public string messageTwo= "Eh, it \ndoesn't \nmatter";
+
+    public string message1= "How did \nthis \nhappen...";
+	public string message2= "Eh, it \ndoesn't \nmatter";
 	// Use this for initialization
 	void Start () {
 		
@@ -19,17 +18,8 @@ public class ReportScript : ActivatableObject {
 			triggered = true;
 			numTimes++;
 
-			Vector3 playerPosition = raycastSource.transform.position;
-			
-			float distanceOne = Vector3.Magnitude((transform.position - playerPosition) * .8f);
-			
-			//Create the bubble halfway between the object and the player.
-			GameObject bubbleOne = (GameObject)GameObject.Instantiate(textBubblePrefab, playerPosition + distanceOne * raycastSource.transform.forward, new Quaternion());
-			GameObject bubbleTwo = (GameObject)GameObject.Instantiate(textBubblePrefab, playerPosition + distanceOne * raycastSource.transform.forward + new Vector3(0,-4,-5), new Quaternion());
-			
-			bubbleOne.GetComponent<TextBubbleScript>().fullMessage = messageOne;
-			bubbleTwo.GetComponent<TextBubbleScript>().fullMessage = messageTwo;
-
+            makeBubble(message1, new Vector3(-.25f, .25f, 0));
+            makeBubble(message2, new Vector3(.25f, .25f, 0));
 		}
 		
 		//Turn off the triggering

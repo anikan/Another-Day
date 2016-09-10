@@ -2,8 +2,8 @@
 using System.Collections;
 
 public class MathScript : ActivatableObject {
-	public string messageOne= "What a\n drag";
-	public string messageTwo= "I was good\n at math...";
+	public string message1= "What a\n drag";
+	public string message2= "I was good\n at math...";
 	// Use this for initialization
 	void Start () {
 		
@@ -20,14 +20,9 @@ public class MathScript : ActivatableObject {
 			Vector3 playerPosition = raycastSource.transform.position;
 		
 			float distanceOne = Vector3.Magnitude((transform.position - playerPosition) * .8f);
-			
-			//Create the bubble halfway between the object and the player.
-			GameObject bubbleOne = (GameObject)GameObject.Instantiate(textBubblePrefab, playerPosition + distanceOne * raycastSource.transform.forward, new Quaternion());
-			GameObject bubbleTwo = (GameObject)GameObject.Instantiate(textBubblePrefab, playerPosition + distanceOne * raycastSource.transform.forward + new Vector3(0,-4,-5), new Quaternion());
 
-			bubbleOne.GetComponent<TextBubbleScript>().fullMessage = messageOne;
-			bubbleTwo.GetComponent<TextBubbleScript>().fullMessage = messageTwo;
-	
+            makeBubble(message1, new Vector3(-.25f, .25f, 0));
+            makeBubble(message2, new Vector3(.25f, .25f, 0));	
 		}
 		
 		//Turn off the triggering

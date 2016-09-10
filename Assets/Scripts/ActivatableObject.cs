@@ -11,8 +11,6 @@ public abstract class ActivatableObject : MonoBehaviour {
     public bool triggered = false;
     public int numTimes = 0;
 
-    public Object textBubblePrefab;
-
     public GameObject raycastSource;
 
 
@@ -49,7 +47,7 @@ public abstract class ActivatableObject : MonoBehaviour {
     /// <param name="offset"></param>
     public void makeBubble(string message, Vector3 offset) {
         //Create the bubble above the object.
-        GameObject bubble = (GameObject)GameObject.Instantiate(textBubblePrefab, transform.position, new Quaternion());
+        GameObject bubble = (GameObject)GameObject.Instantiate(OverallStatus.textBubblePrefab, transform.position, new Quaternion());
 
         bubble.GetComponent<TextBubbleScript>().fullMessage = message;
 

@@ -26,7 +26,7 @@ public class PhoneScript : ActivatableObject
     // Use this for initialization
     void Start()
     {
-
+        StartCoroutine(StartConversation());
     }
 
     // Update is called once per frame
@@ -110,5 +110,21 @@ public class PhoneScript : ActivatableObject
         Vector2 contentSize = contentRect.sizeDelta;
         contentSize.y += textHeight + textOffset + bubbleOffset;
         contentRect.sizeDelta = contentSize;
+
+        contentCanvas.GetComponentInParent<ScrollRect>().velocity = new Vector2(0f, 10f);
     }
+
+    IEnumerator StartConversation()
+    {
+        SendMessage(false, "Hey, I haven't seen you in a while");
+        //Create though bubble for sam.
+
+        yield return new WaitForSeconds(1f);
+        makeBubble("Probably Sam. Maybe worried about me?");
+        SendMessage(false, "What's up?");
+
+
+    }
+
+
 }

@@ -19,11 +19,8 @@ public class BagelScript : ActivatableObject {
 			Vector3 playerPosition = raycastSource.transform.position;
 			
 			float distance = Vector3.Magnitude((transform.position - playerPosition) * .8f);
-			
-			//Create the bubble halfway between the object and the player.
-			GameObject bubble = (GameObject)GameObject.Instantiate(textBubblePrefab, playerPosition + distance * raycastSource.transform.forward, new Quaternion());
-			
-			bubble.GetComponent<TextBubbleScript>().fullMessage = message;
+
+            makeBubble(message, new Vector3(0, .25f, 0));
 		}
 		
 		//Turn off the triggering
