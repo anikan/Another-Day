@@ -18,8 +18,8 @@ public class DiaryScript : ActivatableObject {
 			triggered = true;
 			numTimes++;
 
-            makeBubble(messageOne, new Vector3(-1, 1, 0));
-            makeBubble(messageTwo, new Vector3(1, 1, 0));
+            makeBubble(messageOne, new Vector3(-.25f, .25f, 0));
+            makeBubble(messageTwo, new Vector3(.25f, .25f, 0));
 
             OverallStatus.diaryChecked = true;
 
