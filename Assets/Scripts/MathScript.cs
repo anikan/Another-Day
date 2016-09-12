@@ -16,10 +16,6 @@ public class MathScript : ActivatableObject {
 		{
 			triggered = true;
 			numTimes++;
-			
-			Vector3 playerPosition = raycastSource.transform.position;
-		
-			float distanceOne = Vector3.Magnitude((transform.position - playerPosition) * .8f);
 
             makeBubble(message1, new Vector3(-.25f, .25f, 0));
             makeBubble(message2, new Vector3(.25f, .25f, 0));	

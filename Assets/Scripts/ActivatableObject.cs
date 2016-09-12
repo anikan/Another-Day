@@ -11,7 +11,7 @@ public abstract class ActivatableObject : MonoBehaviour {
     public bool triggered = false;
     public int numTimes = 0;
 
-    public GameObject raycastSource;
+    //public GameObject raycastSource;
 
 
     // Use this for initialization
@@ -21,7 +21,6 @@ public abstract class ActivatableObject : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-
     }
 
     public void Activate() {
@@ -32,12 +31,25 @@ public abstract class ActivatableObject : MonoBehaviour {
         isActive = false;
     }
 
+    void OnMouseDown()
+    {
+        if (!isActive)
+        {
+            Activate();
+        }
+
+        else
+        {
+            Deactivate();
+        }
+    }
+
     /// <summary>
     /// Create a text bubble with default 0,.5f,0 offset.
     /// </summary>
     /// <param name="message"></param>
-    public void makeBubble(string message) {
-        makeBubble(message, new Vector3(0, .1f, 0));
+    public GameObject makeBubble(string message) {
+        return makeBubble(message, new Vector3(0, .1f, 0));
     }
 
     /// <summary>
@@ -45,7 +57,7 @@ public abstract class ActivatableObject : MonoBehaviour {
     /// </summary>
     /// <param name="message"></param>
     /// <param name="offset"></param>
-    public void makeBubble(string message, Vector3 offset) {
+    public GameObject makeBubble(string message, Vector3 offset) {
         //Create the bubble above the object.
         GameObject bubble = (GameObject)GameObject.Instantiate(OverallStatus.textBubblePrefab, transform.position, new Quaternion());
 
@@ -62,6 +74,6 @@ public abstract class ActivatableObject : MonoBehaviour {
         //joint.maxDistance = 3;
         joint.anchor = offset;
 
-        
+        return bubble;
     }
 }

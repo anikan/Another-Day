@@ -8,7 +8,7 @@ public class GuitarScript : ActivatableObject {
     void Start() {
 
     }
-
+        
     // Update is called once per frame
     void Update() {
         if(Input.GetKey(KeyCode.A)) {
@@ -26,7 +26,7 @@ public class GuitarScript : ActivatableObject {
 
             makeBubble(messageOne, new Vector3(-.25f, .25f, 0));
             makeBubble(messageTwo, new Vector3(.25f, .25f, 0));
-
+            OverallStatus.guitarChecked = true;
             /*
                   Vector3 playerPosition = raycastSource.transform.position;
 

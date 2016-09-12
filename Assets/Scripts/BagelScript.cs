@@ -15,10 +15,7 @@ public class BagelScript : ActivatableObject {
 		{
 			triggered = true;
 			numTimes++;
-			
-			Vector3 playerPosition = raycastSource.transform.position;
-			
-			float distance = Vector3.Magnitude((transform.position - playerPosition) * .8f);
+
 
             makeBubble(message, new Vector3(0, .25f, 0));
 		}

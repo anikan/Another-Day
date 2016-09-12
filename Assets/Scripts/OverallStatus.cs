@@ -12,18 +12,28 @@ public class OverallStatus : MonoBehaviour {
     public static GameObject playerCamera;
     public static GameObject textBubblePrefab;
     public GameObject textBubblePrefabLocal;
+    public PhoneScript phone;
 
     public static bool doorChecked;
+    public static bool knifeChecked;
+    public static bool windowChecked;
+    public static bool guitarChecked;
+    public static bool diaryChecked;
+    public static bool textbookChecked;
+    public static bool phoneChecked;
 
-
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Awake () {
         playerCamera = GameObject.Find("Camera (head)");
         textBubblePrefab = textBubblePrefabLocal;
   }
 	
 	// Update is called once per frame
 	void Update () {
-	
-	}
+        if (doorChecked && knifeChecked && windowChecked && guitarChecked && diaryChecked && textbookChecked && phoneChecked)
+        {
+            MusicScript.instance.stopSong();
+            phone.StartConversation();
+        }
+    }
 }

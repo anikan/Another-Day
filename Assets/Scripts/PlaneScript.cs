@@ -27,6 +27,7 @@ public class PlaneScript : ActivatableObject {
             directionalLight.SetActive(false);
             pointLight.SetActive(false);
             planeObject.SetActive(false);
+            MusicScript.instance.startFirstSong();
 
             makeBubble(message);
         }

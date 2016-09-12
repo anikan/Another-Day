@@ -1,67 +1,115 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
-public class TextBubbleScript : MonoBehaviour {
+public class TextBubbleScript : MonoBehaviour
+{
 
-  public GameObject[] bubbleSprites;
-  //public GameObject raycastSource;
+    public GameObject[] bubbleSprites;
+    //public GameObject raycastSource;
 
-  public float cloudShiftTime = .1f;
-  public float textSpeed = .1f;
+    public float cloudShiftTime = .1f;
+    public float textSpeed = .1f;
 
-  private float timeSinceLastCharacter = 0f;
-  private float timeSinceLastCloud = 0f;
+    private float timeSinceLastCharacter = 0f;
+    private float timeSinceLastCloud = 0f;
 
-  private int activeCloudIndex = 0;
+    private int activeCloudIndex = 0;
 
-  public float timeAfterDoneToDestroy = 100f;
+    public float timeAfterDoneToDestroy = 100f;
 
-  //Message variables
-  public string fullMessage;
-  public string messageSoFar;
+    //Message variables
+    public string fullMessage;
+    public string messageSoFar;
 
-  private int currentStringLength = 0;
+    private int currentStringLength = 0;
 
-  public TextMesh textBox;
+    public Text textBox;
 
-  public Animator animator;
+    public Animator animator;
 
-  // Use this for initialization
-  void Start() {
-    fullMessage = fullMessage.Replace("\\n", "\n");
-    animator = GetComponent<Animator>();
-  }
+    private float bubbleOffset = 10;
 
-  // Update is called once per frame
-  void Update() {
-    transform.LookAt(OverallStatus.playerCamera.transform);
+    // Use this for initialization
+    void Start()
+    {
+        fullMessage = fullMessage.Replace("\\n", "\n");
+        animator = GetComponent<Animator>();
 
-    timeSinceLastCharacter -= Time.deltaTime;
-    timeSinceLastCloud -= Time.deltaTime;
+        //Temporarily setting the message in order to get the preferred height.
+        textBox.text = fullMessage;
 
-    //Shift to the next cloud in the array.
-    if(timeSinceLastCloud < 0f) {
-      //Hide old cloud.
-      timeSinceLastCloud = cloudShiftTime;
-      bubbleSprites[activeCloudIndex].SetActive(false);
+        float textHeight = textBox.preferredHeight;
 
-      //Show new cloud.
-      activeCloudIndex = (activeCloudIndex + 1) % (bubbleSprites.Length);
-      bubbleSprites[activeCloudIndex].SetActive(true);
-      //bubbleSprites[activeCloudIndex].transform.Rotate(0, 0, 10f);
+        //Then update the images and the text itself.
+        //Images
+
+        //Stores the new size for UI elements.
+        Vector2 newRectSize;
+
+        for (int i = 0; i < bubbleSprites.Length; i++)
+        {
+            RectTransform messageRect = bubbleSprites[i].GetComponent<RectTransform>();
+
+            newRectSize = messageRect.sizeDelta;
+            newRectSize.y = textHeight + bubbleOffset;
+
+            messageRect.sizeDelta = new Vector2(newRectSize.x, newRectSize.y);
+        }
+
+
+        //Text
+        newRectSize = textBox.rectTransform.sizeDelta;
+        newRectSize.y = textHeight;
+
+        textBox.rectTransform.sizeDelta = new Vector2(newRectSize.x, newRectSize.y);
+
+        textBox.text = "";
+
     }
 
-    //Add new character if time has elapsed and there are characters left.
-    if(timeSinceLastCharacter < 0f && ((currentStringLength) != fullMessage.Length)) {
-      timeSinceLastCharacter = textSpeed;
-      messageSoFar = fullMessage.Substring(0, ++currentStringLength);
-      textBox.text = messageSoFar;
+    // Update is called once per frame
+    void Update()
+    {
+        transform.LookAt(OverallStatus.playerCamera.transform);
 
-      //The last one. Destroy in a bit.
-      if((currentStringLength) == fullMessage.Length) {
-        animator.SetBool("Ending", true);
-        Destroy(this.gameObject, timeAfterDoneToDestroy);
-      }
+        timeSinceLastCharacter -= Time.deltaTime;
+        timeSinceLastCloud -= Time.deltaTime;
+
+        //Shift to the next cloud in the array.
+        if (timeSinceLastCloud < 0f)
+        {
+            //Hide old cloud.
+            timeSinceLastCloud = cloudShiftTime;
+            bubbleSprites[activeCloudIndex].SetActive(false);
+
+            //Show new cloud.
+            activeCloudIndex = (activeCloudIndex + 1) % (bubbleSprites.Length);
+            bubbleSprites[activeCloudIndex].SetActive(true);
+            //bubbleSprites[activeCloudIndex].transform.Rotate(0, 0, 10f);
+        }
+
+        //Add new character if time has elapsed and there are characters left.
+        if (timeSinceLastCharacter < 0f && ((currentStringLength) != fullMessage.Length))
+        {
+            timeSinceLastCharacter = textSpeed;
+            messageSoFar = fullMessage.Substring(0, ++currentStringLength);
+            textBox.text = messageSoFar;
+
+            //The last one. Destroy in a bit.
+            if ((currentStringLength) == fullMessage.Length)
+            {
+                animator.SetBool("Ending", true);
+                Destroy(this.gameObject, timeAfterDoneToDestroy);
+            }
+        }
     }
-  }
+
+    /// <summary>
+    /// Animate the bubble's destruction.
+    /// </summary>
+    public void destroy()
+    {
+        Destroy(this.gameObject);
+    }
 }
