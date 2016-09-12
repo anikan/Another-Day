@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class OverallStatus : MonoBehaviour {
+public class OverallStatus : MonoBehaviour
+{
 
     public enum phoneCompleted
     {
@@ -15,7 +16,6 @@ public class OverallStatus : MonoBehaviour {
     public PhoneScript phone;
     public GameObject guiCam;
 
-    public static bool doorChecked;
     public static bool knifeChecked;
     public static bool windowChecked;
     public static bool guitarChecked;
@@ -24,22 +24,31 @@ public class OverallStatus : MonoBehaviour {
     public static bool phoneChecked;
 
     // Use this for initialization
-    void Awake () {
+    void Awake()
+    {
         playerCamera = GameObject.Find("Camera (eye)");
         textBubblePrefab = textBubblePrefabLocal;
-  }
-	
-	// Update is called once per frame
-	void Update () {
-        guiCam.transform.position = playerCamera.transform.position;
-        
-      //  print(guiCam.transform.position + " " + playerCamera.transform.position);
-        guiCam.transform.rotation = playerCamera.transform.rotation;
+    }
 
-        if(doorChecked && knifeChecked && windowChecked && guitarChecked && diaryChecked && textbookChecked && phoneChecked)
+    // Update is called once per frame
+    void Update()
+    {
+        guiCam.transform.position = playerCamera.transform.position;
+
+        //  print(guiCam.transform.position + " " + playerCamera.transform.position);
+        guiCam.transform.rotation = playerCamera.transform.rotation;
+    }
+
+    IEnumerator WaitForObjectsChecked()
+    {
+        //While something still needs to be checked, wait.
+        while (!(knifeChecked && windowChecked && guitarChecked && diaryChecked && textbookChecked && phoneChecked))
         {
-            MusicScript.instance.stopSong();
-            phone.StartConversation();
+            yield return new WaitForSeconds(.1f);
         }
+
+        MusicScript.instance.stopSong();
+        phone.StartConversation();
+
     }
 }

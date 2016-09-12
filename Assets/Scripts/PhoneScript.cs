@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using Valve.VR;
 
-public class PhoneScript : ActivatableObject {
+public class PhoneScript : ActivatableObject
+{
     //The content where scroll view objects go.
     public GameObject contentCanvas;
 
@@ -32,40 +33,55 @@ public class PhoneScript : ActivatableObject {
     bool triggeredAgain = false;
     bool convoStarted = false;
 
+    public string message = "I don't really want to talk to anyone.";
+
+
     public SteamVR_Controller.Device activeController;
 
     // Use this for initialization
-    void Start() {
+    void Start()
+    {
         StartConversation();
     }
 
-    public void StartConversation() {
+    public void StartConversation()
+    {
         StartCoroutine(Conversation());
     }
 
     // Update is called once per frame
-    void Update() {
+    void Update()
+    {
         //Trigger the effect if not previously triggered this activation.
-        if(isActive && !triggered) {
+        if (isActive && !triggered)
+        {
+            OverallStatus.windowChecked = true;
+
             triggered = true;
+
+            makeBubble(message);
 
         }
 
         //Trigger the effect if not previously triggered this activation.
-        if(isActive && convoStarted && !triggeredAgain) {
+        if (isActive && convoStarted && !triggeredAgain)
+        {
             triggeredAgain = true;
         }
 
-        if(Input.GetKeyDown(KeyCode.A)) {
+        if (Input.GetKeyDown(KeyCode.A))
+        {
             SendMessage(true, "H nackasd,l;a");
         }
     }
 
-    void SendMessage(bool isOwn, string message) {
+    void SendMessage(bool isOwn, string message)
+    {
         GameObject messageObject;
         Vector3 messagePosition;
 
-        if(isOwn) {
+        if (isOwn)
+        {
             messageObject = (GameObject)GameObject.Instantiate(ownMessagePrefab, contentCanvas.transform, true);
             messagePosition = ownMessageStartLocation;
         }
@@ -123,23 +139,27 @@ public class PhoneScript : ActivatableObject {
         contentCanvas.GetComponentInParent<ScrollRect>().velocity = new Vector2(0f, 10f);
 
         GetComponent<AudioSource>().Play();
-        if(activeController != null)
+        if (activeController != null)
             StartCoroutine(VibratePhone());
         //TODO
         //Vive vibrate.
     }
-    IEnumerator VibratePhone() {
-        for(float i = 0; i < .5f; i += Time.deltaTime) {
+    IEnumerator VibratePhone()
+    {
+        for (float i = 0; i < .5f; i += Time.deltaTime)
+        {
             activeController.TriggerHapticPulse();
             yield return null;
         }
         yield return null;
     }
-    void HandleWaits() {
+    void HandleWaits()
+    {
 
     }
 
-    IEnumerator Conversation() {
+    IEnumerator Conversation()
+    {
         convoStarted = true;
         SendMessage(false, "Hey, I haven't seen you in a while");
         //Create though bubble for sam.
@@ -149,7 +169,8 @@ public class PhoneScript : ActivatableObject {
         SendMessage(false, "What's up?");
 
         //Wait for player to pick up phone again.
-        while(!triggeredAgain) {
+        while (!triggeredAgain)
+        {
             yield return null;
         }
 
@@ -164,8 +185,6 @@ public class PhoneScript : ActivatableObject {
         choice1.GetComponent<TextBubbleScript>().timeAfterDoneToDestroy = 999999;
         choice2.GetComponent<TextBubbleScript>().timeAfterDoneToDestroy = 999999;
 
-
-
         //TODO
         //Vive options.
         Vector2 p;
@@ -175,28 +194,30 @@ public class PhoneScript : ActivatableObject {
             print("Waiting" + (activeController != null ? activeController.GetAxis(EVRButtonId.k_EButton_SteamVR_Touchpad): Vector2.zero));
             yield return null;
         }*/
-        while(activeController == null ||
+        while (activeController == null ||
             (!(activeController.GetAxis(EVRButtonId.k_EButton_SteamVR_Touchpad).x < -.5f) &&
-            !(activeController.GetAxis(EVRButtonId.k_EButton_SteamVR_Touchpad).x > .5f)) || !activeController.GetPress(SteamVR_Controller.ButtonMask.Touchpad)) {
-            print("Waiting" + (activeController != null ? activeController.GetAxis(EVRButtonId.k_EButton_SteamVR_Touchpad): Vector2.zero));
+            !(activeController.GetAxis(EVRButtonId.k_EButton_SteamVR_Touchpad).x > .5f)) || !activeController.GetPress(SteamVR_Controller.ButtonMask.Touchpad))
+        {
             yield return null;
         }
-        print("found");
         p = activeController.GetAxis(EVRButtonId.k_EButton_SteamVR_Touchpad);
 
         //Choice has been selected.
 
-        if(bubble != null) {
+        if (bubble != null)
+        {
             bubble.GetComponent<TextBubbleScript>().destroy();
         }
         choice1.GetComponent<TextBubbleScript>().destroy();
         choice2.GetComponent<TextBubbleScript>().destroy();
 
-        if(p.x < -.5f) {
+        if (p.x < -.5f)
+        {
             yield return FinePart();
         }
 
-        else if(p.x > .5f) {
+        else if (p.x > .5f)
+        {
             yield return BadPart();
         }
 
@@ -205,21 +226,142 @@ public class PhoneScript : ActivatableObject {
         MusicScript.instance.startNextSong();
     }
 
-    IEnumerator FinePart() {
-        makeBubble("I don't want Sam to worry.");
+    IEnumerator FinePart()
+    {
+        GameObject bubble = makeBubble("I don't want Sam to worry.");
         SendMessage(true, "Oh ha, nothing much. Just... you know... the usual");
         yield return new WaitForSeconds(1f);
+
+        SendMessage(false, "Then why haven't you been to classes?");
+
+        GameObject choice1 = makeBubble("Don't worry about it", new Vector3(-.5f, .1f, .75f));
+        GameObject choice2 = makeBubble("Ok", new Vector3(.5f, .1f, 0.75f));
+
+        choice1.GetComponent<TextBubbleScript>().timeAfterDoneToDestroy = 999999;
+        choice2.GetComponent<TextBubbleScript>().timeAfterDoneToDestroy = 999999;
+
+        while (activeController == null ||
+    (!(activeController.GetAxis(EVRButtonId.k_EButton_SteamVR_Touchpad).x < -.5f) &&
+    !(activeController.GetAxis(EVRButtonId.k_EButton_SteamVR_Touchpad).x > .5f)) || !activeController.GetPress(SteamVR_Controller.ButtonMask.Touchpad))
+        {
+            yield return null;
+        }
+
+
+        Vector2 p = activeController.GetAxis(EVRButtonId.k_EButton_SteamVR_Touchpad);
+
+        //Choice has been selected.
+
+        if (bubble != null)
+        {
+            bubble.GetComponent<TextBubbleScript>().destroy();
+        }
+        choice1.GetComponent<TextBubbleScript>().destroy();
+        choice2.GetComponent<TextBubbleScript>().destroy();
+
+        if (p.x < -.5f)
+        {
+            yield return DontWorryPart();
+        }
+
+        else if (p.x > .5f)
+        {
+            yield return BadPart();
+        }
+
     }
 
-    IEnumerator BadPart() {
-        makeBubble("Hmm.", new Vector3(0.0f, 1.0f, 0.0f));
-        SendMessage(true, "Eh, not feeling that great, nothing much.");
+    IEnumerator BadPart()
+    {
+        GameObject bubble = makeBubble("Hmm.", new Vector3(0.0f, 1.0f, 0.0f));
+        SendMessage(true, "Eh, not feeling that great, nothing much going on.");
         yield return new WaitForSeconds(1f);
-        yield return null;
+
+        SendMessage(false, "Oh really, sick?");
+
+        GameObject choice1 = makeBubble("Yeah", new Vector3(-.5f, .1f, .75f));
+        GameObject choice2 = makeBubble("Kinda Empty", new Vector3(.5f, .1f, 0.75f));
+
+        choice1.GetComponent<TextBubbleScript>().timeAfterDoneToDestroy = 999999;
+        choice2.GetComponent<TextBubbleScript>().timeAfterDoneToDestroy = 999999;
+
+        while (activeController == null ||
+    (!(activeController.GetAxis(EVRButtonId.k_EButton_SteamVR_Touchpad).x < -.5f) &&
+    !(activeController.GetAxis(EVRButtonId.k_EButton_SteamVR_Touchpad).x > .5f)) || !activeController.GetPress(SteamVR_Controller.ButtonMask.Touchpad))
+        {
+            yield return null;
+        }
+
+        Vector2 p = activeController.GetAxis(EVRButtonId.k_EButton_SteamVR_Touchpad);
+
+        //Choice has been selected.
+
+        if (bubble != null)
+        {
+            bubble.GetComponent<TextBubbleScript>().destroy();
+        }
+        choice1.GetComponent<TextBubbleScript>().destroy();
+        choice2.GetComponent<TextBubbleScript>().destroy();
+
+        //Choice doesn't matter.
+
+        SendMessage(false, "Still? Can't you snap out of it.");
+
+        yield return DontWorryPart();
     }
 
-    IEnumerator ScrollWindow() {
-        while(true) {
+    IEnumerator DontWorryPart()
+    {
+        SendMessage(true, "Don't worry about it.");
+        yield return new WaitForSeconds(.5f);
+        SendMessage(true, "Argh You can be so annoying!");
+        yield return new WaitForSeconds(.5f);
+        SendMessage(true, "Would you stop! I'm fine!.");
+        GameObject bubble = makeBubble("Dang that was harsher than I intended.", new Vector3(0.0f, 1.0f, 0.0f));
+        yield return new WaitForSeconds(1f);
+
+        SendMessage(true, "I'm sorry");
+        yield return new WaitForSeconds(1f);
+        SendMessage(true, "I can't do anything right, can I");
+        yield return new WaitForSeconds(1f);
+
+        SendMessage(false, "No!");
+        yield return new WaitForSeconds(.5f);
+
+        SendMessage(false, "It's ok, I forgot");
+        yield return new WaitForSeconds(.5f);
+
+        SendMessage(false, "I need to be more careful about what I say.");
+        yield return new WaitForSeconds(.5f);
+
+        SendMessage(false, "If you need to talk, I'm here for you.");
+        yield return new WaitForSeconds(.5f);
+
+        bubble.GetComponent<TextBubbleScript>().destroy();
+
+        bubble = makeBubble("Why are they bothering?", new Vector3(0.0f, 1.0f, 0.0f));
+
+        SendMessage(true, "Thanks I guess");
+        yield return new WaitForSeconds(.5f);
+
+        SendMessage(true, "For now I think I'm gonna rest more");
+        yield return new WaitForSeconds(.5f);
+
+        SendMessage(true, "Bye");
+        yield return new WaitForSeconds(2f);
+
+        SendMessage(false, "Catch you later!");
+
+        yield return new WaitForSeconds(.5f);
+
+        SendMessage(false, "And remember to hold on, at least for another day!");
+    }
+
+
+    IEnumerator ScrollWindow()
+    {
+        while (true)
+        {
             //TODO
             //Vive scroll.
             //Vive code here. Essentially amount of touchpad scroll is velocity.
@@ -228,3 +370,4 @@ public class PhoneScript : ActivatableObject {
         }
     }
 }
+

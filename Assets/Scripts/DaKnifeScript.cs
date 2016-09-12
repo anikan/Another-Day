@@ -12,6 +12,9 @@ public class DaKnifeScript : ActivatableObject {
     void Update() {
         //Trigger the effect if not previously triggered this activation.
         if(isActive && !triggered) {
+
+            OverallStatus.knifeChecked = true;
+
             triggered = true;
             numTimes++;
 

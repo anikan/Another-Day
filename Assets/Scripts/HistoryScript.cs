@@ -19,6 +19,8 @@ public class HistoryScript : ActivatableObject {
 
             makeBubble(message);
 
+            OverallStatus.textbookChecked = true;
+
             /*
             Vector3 playerPosition = raycastSource.transform.position;
 
