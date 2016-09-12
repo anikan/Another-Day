@@ -4,8 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using Valve.VR;
 
-public class PhoneScript : ActivatableObject
-{
+public class PhoneScript : ActivatableObject {
     //The content where scroll view objects go.
     public GameObject contentCanvas;
 
@@ -36,45 +35,42 @@ public class PhoneScript : ActivatableObject
     public SteamVR_Controller.Device activeController;
 
     // Use this for initialization
-    void Start()
-    {
+    void Start() {
         StartConversation();
     }
 
-    public void StartConversation()
-    {
+    public void StartConversation() {
         StartCoroutine(Conversation());
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         //Trigger the effect if not previously triggered this activation.
-        if (isActive && !triggered)
-        {
+        if(isActive && !triggered) {
             triggered = true;
+
         }
 
         //Trigger the effect if not previously triggered this activation.
-        if (isActive && convoStarted && !triggeredAgain)
-        {
+        if(isActive && convoStarted && !triggeredAgain) {
             triggeredAgain = true;
+        }
+
+        if(Input.GetKeyDown(KeyCode.A)) {
+            SendMessage(true, "H nackasd,l;a");
         }
     }
 
-    void SendMessage(bool isOwn, string message)
-    {
+    void SendMessage(bool isOwn, string message) {
         GameObject messageObject;
         Vector3 messagePosition;
 
-        if (isOwn)
-        {
+        if(isOwn) {
             messageObject = (GameObject)GameObject.Instantiate(ownMessagePrefab, contentCanvas.transform, true);
             messagePosition = ownMessageStartLocation;
         }
 
-        else
-        {
+        else {
             messageObject = (GameObject)GameObject.Instantiate(otherMessagePrefab, contentCanvas.transform, true);
             messagePosition = otherMessageStartLocation;
 
@@ -127,18 +123,23 @@ public class PhoneScript : ActivatableObject
         contentCanvas.GetComponentInParent<ScrollRect>().velocity = new Vector2(0f, 10f);
 
         GetComponent<AudioSource>().Play();
-
+        if(activeController != null)
+            StartCoroutine(VibratePhone());
         //TODO
         //Vive vibrate.
     }
-
-    void HandleWaits()
-    {
+    IEnumerator VibratePhone() {
+        for(float i = 0; i < .5f; i += Time.deltaTime) {
+            activeController.TriggerHapticPulse();
+            yield return null;
+        }
+        yield return null;
+    }
+    void HandleWaits() {
 
     }
 
-    IEnumerator Conversation()
-    {
+    IEnumerator Conversation() {
         convoStarted = true;
         SendMessage(false, "Hey, I haven't seen you in a while");
         //Create though bubble for sam.
@@ -148,8 +149,7 @@ public class PhoneScript : ActivatableObject
         SendMessage(false, "What's up?");
 
         //Wait for player to pick up phone again.
-        while (!triggeredAgain)
-        {
+        while(!triggeredAgain) {
             yield return null;
         }
 
@@ -161,26 +161,42 @@ public class PhoneScript : ActivatableObject
         GameObject choice1 = makeBubble("Fine", new Vector3(-.5f, .1f, .75f));
         GameObject choice2 = makeBubble("Not feeling well", new Vector3(.5f, .1f, 0.75f));
 
+        choice1.GetComponent<TextBubbleScript>().timeAfterDoneToDestroy = 999999;
+        choice2.GetComponent<TextBubbleScript>().timeAfterDoneToDestroy = 999999;
+
+
+
         //TODO
         //Vive options.
-
-        while (!Input.GetMouseButtonDown(0) && !Input.GetMouseButtonDown(1))
-        {
+        Vector2 p;
+        /*   while(activeController == null ||
+            !(activeController.GetAxis(EVRButtonId.k_EButton_SteamVR_Touchpad).x < -.5f) &&
+            !(activeController.GetAxis(EVRButtonId.k_EButton_SteamVR_Touchpad).x > .5f)) {
+            print("Waiting" + (activeController != null ? activeController.GetAxis(EVRButtonId.k_EButton_SteamVR_Touchpad): Vector2.zero));
+            yield return null;
+        }*/
+        while(activeController == null ||
+            (!(activeController.GetAxis(EVRButtonId.k_EButton_SteamVR_Touchpad).x < -.5f) &&
+            !(activeController.GetAxis(EVRButtonId.k_EButton_SteamVR_Touchpad).x > .5f)) || !activeController.GetPress(SteamVR_Controller.ButtonMask.Touchpad)) {
+            print("Waiting" + (activeController != null ? activeController.GetAxis(EVRButtonId.k_EButton_SteamVR_Touchpad): Vector2.zero));
             yield return null;
         }
+        print("found");
+        p = activeController.GetAxis(EVRButtonId.k_EButton_SteamVR_Touchpad);
 
         //Choice has been selected.
-        bubble.GetComponent<TextBubbleScript>().destroy();
+
+        if(bubble != null) {
+            bubble.GetComponent<TextBubbleScript>().destroy();
+        }
         choice1.GetComponent<TextBubbleScript>().destroy();
         choice2.GetComponent<TextBubbleScript>().destroy();
 
-        if (Input.GetMouseButtonDown(0))
-        {
+        if(p.x < -.5f) {
             yield return FinePart();
         }
 
-        else if (Input.GetMouseButtonDown(1))
-        {
+        else if(p.x > .5f) {
             yield return BadPart();
         }
 
@@ -189,25 +205,21 @@ public class PhoneScript : ActivatableObject
         MusicScript.instance.startNextSong();
     }
 
-    IEnumerator FinePart()
-    {
+    IEnumerator FinePart() {
         makeBubble("I don't want Sam to worry.");
         SendMessage(true, "Oh ha, nothing much. Just... you know... the usual");
         yield return new WaitForSeconds(1f);
     }
 
-    IEnumerator BadPart()
-    {
+    IEnumerator BadPart() {
         makeBubble("Hmm.", new Vector3(0.0f, 1.0f, 0.0f));
         SendMessage(true, "Eh, not feeling that great, nothing much.");
         yield return new WaitForSeconds(1f);
         yield return null;
     }
 
-    IEnumerator ScrollWindow()
-    {
-        while (true)
-        {
+    IEnumerator ScrollWindow() {
+        while(true) {
             //TODO
             //Vive scroll.
             //Vive code here. Essentially amount of touchpad scroll is velocity.

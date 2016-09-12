@@ -33,7 +33,7 @@ public class OverallStatus : MonoBehaviour {
 	void Update () {
         guiCam.transform.position = playerCamera.transform.position;
         
-        print(guiCam.transform.position + " " + playerCamera.transform.position);
+      //  print(guiCam.transform.position + " " + playerCamera.transform.position);
         guiCam.transform.rotation = playerCamera.transform.rotation;
 
         if(doorChecked && knifeChecked && windowChecked && guitarChecked && diaryChecked && textbookChecked && phoneChecked)

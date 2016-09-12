@@ -36,12 +36,11 @@ public class GrabScriptVive : MonoBehaviour
 
         if (currentlySelectedObject != null)
         {
-
+            //print(currentlySelectedObject.name);
             if (currentlySelectedObject.GetComponent<GrabbableVive>())
             {
                 //Start grabbing. Update: No longer on GetTouchDown allowing for "sticky" hands. Though the sticky bug exists, with too slow collision detection.
-                if (joint == null && device.GetTouchDown(SteamVR_Controller.ButtonMask.Trigger))
-                {
+                if(joint == null && device.GetTouchDown(SteamVR_Controller.ButtonMask.Trigger)) {
                     currentlySelectedObject.GetComponent<GrabbableVive>().isActive = true;
 
                     isGrabbing = true;
@@ -53,35 +52,30 @@ public class GrabScriptVive : MonoBehaviour
 
                     //For another day in particular. Trigger stuff on grab:
                     ActivatableObject aObject = currentlySelectedObject.GetComponent<ActivatableObject>();
-                    if (aObject != null)
-                    {
+                    if(aObject != null) {
                         aObject.Activate();
 
                         //Tell phone something is holding it.
                         PhoneScript phone = currentlySelectedObject.GetComponent<PhoneScript>();
-                        if (phone != null)
-                        {
+                        if(phone != null) {
                             phone.activeController = device;
                         }
                     }
 
                 }
-
+             
                 //Stop grabbing.
-                else if (joint != null && device.GetTouchUp(SteamVR_Controller.ButtonMask.Trigger))
-                {
+                else if(joint != null && device.GetTouchUp(SteamVR_Controller.ButtonMask.Trigger)) {
 
                     //For another day in particular. Trigger stuff on grab:
                     ActivatableObject aObject = currentlySelectedObject.GetComponent<ActivatableObject>();
 
-                    if (aObject != null)
-                    {
+                    if(aObject != null) {
                         aObject.Deactivate();
 
                         //Tell phone nothing is holding it.
                         PhoneScript phone = currentlySelectedObject.GetComponent<PhoneScript>();
-                        if (phone != null)
-                        {
+                        if(phone != null) {
                             phone.activeController = null;
                         }
                     }
@@ -90,8 +84,7 @@ public class GrabScriptVive : MonoBehaviour
 
                     //Setting throw velocities?
                     var origin = trackedObj.origin ? trackedObj.origin : trackedObj.transform.parent;
-                    if (origin != null)
-                    {
+                    if(origin != null) {
                         rigidbody.velocity = origin.TransformVector(device.velocity);
                         rigidbody.angularVelocity = origin.TransformVector(device.angularVelocity) * .01f;
                     }
@@ -102,6 +95,10 @@ public class GrabScriptVive : MonoBehaviour
 
                     rigidbody.maxAngularVelocity = rigidbody.angularVelocity.magnitude;
                 }
+            }
+            else if(currentlySelectedObject.GetComponent<ActivatableObject>()) {
+                //print("Activate!");
+                currentlySelectedObject.GetComponent<ActivatableObject>().Activate();
             }
 
             else if (currentlySelectedObject.GetComponent<ViveTurn>())
@@ -146,16 +143,16 @@ public class GrabScriptVive : MonoBehaviour
     void OnTriggerStay(Collider other)
     {
 
-        if (other.gameObject.GetComponent<GrabbableVive>() && !isGrabbing)
+        if ((other.gameObject.GetComponent<GrabbableVive>() || other.gameObject.GetComponent<ActivatableObject>()) && !isGrabbing)
         {
-
-            if (currentlySelectedObject != null && other.gameObject == currentlySelectedObject)
+            bool x = other.gameObject.GetComponent<GrabbableVive>();
+            if (currentlySelectedObject != null && other.gameObject == currentlySelectedObject && x)
             {
                 currentlySelectedObject.GetComponent<GrabbableVive>().onHoverLeave();
             }
 
             currentlySelectedObject = other.gameObject;
-            other.gameObject.GetComponent<GrabbableVive>().onHover();
+            if(x) other.gameObject.GetComponent<GrabbableVive>().onHover();
         }
 
         else if (other.gameObject.GetComponent<ViveTurn>() && !isGrabbing)

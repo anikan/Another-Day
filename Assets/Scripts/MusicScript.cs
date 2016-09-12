@@ -79,7 +79,7 @@ public class MusicScript : MonoBehaviour
         for (float timeSinceStart = 0; timeSinceStart < timeToTransitionSong; timeSinceStart += Time.deltaTime)
 
         {
-            Debug.Log(timeSinceStart / timeToTransitionSong * targetVolume);
+          //  Debug.Log(timeSinceStart / timeToTransitionSong * targetVolume);
             GetComponent<AudioSource>().volume = timeSinceStart / timeToTransitionSong * targetVolume;
             yield return null;
             timeSinceStart += Time.deltaTime;
