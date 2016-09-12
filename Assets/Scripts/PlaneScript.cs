@@ -10,10 +10,12 @@ public class PlaneScript : ActivatableObject {
 
     public string message= "I don't think \nthat's a \ngood idea";
     public string startMessage = "It's \n so \n bright...";
+
+    private GameObject initialBubble;
     // Use this for initialization
     void Start () {
-        makeBubble(startMessage);
-
+        initialBubble = makeBubble(startMessage);
+        initialBubble.GetComponent<TextBubbleScript>().timeAfterDoneToDestroy = 999999;
     }
 
     // Update is called once per frame
@@ -21,6 +23,11 @@ public class PlaneScript : ActivatableObject {
         //Trigger the effect if not previously triggered this activation.
         if (isActive && !triggered)
         {
+            if (initialBubble != null)
+            {
+                initialBubble.GetComponent<TextBubbleScript>().destroy();
+            }
+
             triggered = true;
             numTimes++;
 

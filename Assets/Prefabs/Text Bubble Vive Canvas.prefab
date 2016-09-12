@@ -338,7 +338,7 @@ MonoBehaviour:
   - {fileID: 1000014170490596}
   cloudShiftTime: 0.1
   textSpeed: 0.05
-  timeAfterDoneToDestroy: 1000
+  timeAfterDoneToDestroy: 10
   fullMessage: adsdfsdfsdf
   messageSoFar: 
   textBox: {fileID: 114000010830558992}

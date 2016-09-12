@@ -3,7 +3,6 @@ using System.Collections;
 
 public class MusicScript : MonoBehaviour
 {
-
     public static MusicScript instance;
     public AudioClip[] songs;
 

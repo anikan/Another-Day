@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using Valve.VR;
 
 public class PhoneScript : ActivatableObject
 {
@@ -12,7 +13,7 @@ public class PhoneScript : ActivatableObject
     public GameObject otherMessagePrefab;
 
     private Vector3 ownMessageStartLocation = new Vector3(19, 0, 1.4f);
-    private Vector3 otherMessageStartLocation = new Vector3(-19,0, 1.4f);
+    private Vector3 otherMessageStartLocation = new Vector3(-19, 0, 1.4f);
 
     const float FIRST_MESSAGE_HEIGHT = -2.5f;
     float nextMessageHeight = FIRST_MESSAGE_HEIGHT;
@@ -31,6 +32,8 @@ public class PhoneScript : ActivatableObject
 
     bool triggeredAgain = false;
     bool convoStarted = false;
+
+    public SteamVR_Controller.Device activeController;
 
     // Use this for initialization
     void Start()
@@ -57,16 +60,6 @@ public class PhoneScript : ActivatableObject
         {
             triggeredAgain = true;
         }
-
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            SendMessage(true, "Oh Sad soul. Bio is slightly better imo\nw\nefwe");
-        }
-
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            SendMessage(false, "Pls sceptile is cool\nw\nefwe");
-        }
     }
 
     void SendMessage(bool isOwn, string message)
@@ -76,7 +69,7 @@ public class PhoneScript : ActivatableObject
 
         if (isOwn)
         {
-            messageObject = (GameObject) GameObject.Instantiate(ownMessagePrefab, contentCanvas.transform, true);
+            messageObject = (GameObject)GameObject.Instantiate(ownMessagePrefab, contentCanvas.transform, true);
             messagePosition = ownMessageStartLocation;
         }
 
@@ -132,6 +125,11 @@ public class PhoneScript : ActivatableObject
         contentRect.sizeDelta = contentSize;
 
         contentCanvas.GetComponentInParent<ScrollRect>().velocity = new Vector2(0f, 10f);
+
+        GetComponent<AudioSource>().Play();
+
+        //TODO
+        //Vive vibrate.
     }
 
     void HandleWaits()
@@ -155,18 +153,22 @@ public class PhoneScript : ActivatableObject
             yield return null;
         }
 
+        //Start next song.
         MusicScript.instance.startNextSong();
-        
+
         yield return new WaitForSeconds(1f);
 
         GameObject choice1 = makeBubble("Fine", new Vector3(-.5f, .1f, .75f));
         GameObject choice2 = makeBubble("Not feeling well", new Vector3(.5f, .1f, 0.75f));
 
+        //TODO
+        //Vive options.
+
         while (!Input.GetMouseButtonDown(0) && !Input.GetMouseButtonDown(1))
         {
             yield return null;
         }
-        
+
         //Choice has been selected.
         bubble.GetComponent<TextBubbleScript>().destroy();
         choice1.GetComponent<TextBubbleScript>().destroy();
@@ -202,5 +204,15 @@ public class PhoneScript : ActivatableObject
         yield return null;
     }
 
+    IEnumerator ScrollWindow()
+    {
+        while (true)
+        {
+            //TODO
+            //Vive scroll.
+            //Vive code here. Essentially amount of touchpad scroll is velocity.
+            contentCanvas.GetComponentInParent<ScrollRect>().velocity = new Vector2(0f, 10f); //Amount replaces 10f.
 
+        }
+    }
 }
