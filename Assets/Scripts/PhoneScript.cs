@@ -33,6 +33,8 @@ public class PhoneScript : ActivatableObject
     bool triggeredAgain = false;
     bool convoStarted = false;
 
+
+    public GameObject thing;
     public string message = "I don't really want to talk to anyone.";
 
 
@@ -55,7 +57,8 @@ public class PhoneScript : ActivatableObject
         //Trigger the effect if not previously triggered this activation.
         if (isActive && !triggered)
         {
-            OverallStatus.windowChecked = true;
+            HighlightTutorial.turnOffTouchPadHL();
+            OverallStatus.phoneChecked = true;
 
             triggered = true;
 
@@ -136,7 +139,7 @@ public class PhoneScript : ActivatableObject
         contentSize.y += textHeight + textOffset + bubbleOffset;
         contentRect.sizeDelta = contentSize;
 
-        contentCanvas.GetComponentInParent<ScrollRect>().velocity = new Vector2(0f, 10f);
+        contentCanvas.GetComponentInParent<ScrollRect>().velocity = new Vector2(0f, 100f);
 
         GetComponent<AudioSource>().Play();
         if (activeController != null)
@@ -184,10 +187,11 @@ public class PhoneScript : ActivatableObject
 
         choice1.GetComponent<TextBubbleScript>().timeAfterDoneToDestroy = 999999;
         choice2.GetComponent<TextBubbleScript>().timeAfterDoneToDestroy = 999999;
-
-        //TODO
-        //Vive options.
-        Vector2 p;
+        if(activeController != null)
+            HighlightTutorial.turnOnTouchPadHL(thing);
+       //TODO
+       //Vive options.
+       Vector2 p;
         /*   while(activeController == null ||
             !(activeController.GetAxis(EVRButtonId.k_EButton_SteamVR_Touchpad).x < -.5f) &&
             !(activeController.GetAxis(EVRButtonId.k_EButton_SteamVR_Touchpad).x > .5f)) {

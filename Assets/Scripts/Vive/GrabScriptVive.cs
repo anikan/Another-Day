@@ -62,6 +62,7 @@ public class GrabScriptVive : MonoBehaviour
                         PhoneScript phone = currentlySelectedObject.GetComponent<PhoneScript>();
                         if(phone != null) {
                             phone.activeController = device;
+                            phone.thing = gameObject;
                         }
                     }
 
