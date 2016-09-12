@@ -13,6 +13,7 @@ public class OverallStatus : MonoBehaviour {
     public static GameObject textBubblePrefab;
     public GameObject textBubblePrefabLocal;
     public PhoneScript phone;
+    public GameObject guiCam;
 
     public static bool doorChecked;
     public static bool knifeChecked;
@@ -24,13 +25,18 @@ public class OverallStatus : MonoBehaviour {
 
     // Use this for initialization
     void Awake () {
-        playerCamera = GameObject.Find("Camera (head)");
+        playerCamera = GameObject.Find("Camera (eye)");
         textBubblePrefab = textBubblePrefabLocal;
   }
 	
 	// Update is called once per frame
 	void Update () {
-        if (doorChecked && knifeChecked && windowChecked && guitarChecked && diaryChecked && textbookChecked && phoneChecked)
+        guiCam.transform.position = playerCamera.transform.position;
+        
+        print(guiCam.transform.position + " " + playerCamera.transform.position);
+        guiCam.transform.rotation = playerCamera.transform.rotation;
+
+        if(doorChecked && knifeChecked && windowChecked && guitarChecked && diaryChecked && textbookChecked && phoneChecked)
         {
             MusicScript.instance.stopSong();
             phone.StartConversation();
