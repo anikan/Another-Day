@@ -21,6 +21,8 @@ public class DiaryScript : ActivatableObject {
             makeBubble(messageOne, new Vector3(-1, 1, 0));
             makeBubble(messageTwo, new Vector3(1, 1, 0));
 
+            OverallStatus.diaryChecked = true;
+
             /*
 			Vector3 playerPosition = raycastSource.transform.position;
 			
@@ -33,9 +35,9 @@ public class DiaryScript : ActivatableObject {
 			bubbleOne.GetComponent<TextBubbleScript>().fullMessage = messageOne;
 			bubbleTwo.GetComponent<TextBubbleScript>().fullMessage = messageTwo;*/
         }
-		
-		//Turn off the triggering
-		else if (!isActive && triggered)
+
+        //Turn off the triggering
+        else if (!isActive && triggered)
 		{
 			triggered = false;
 		}

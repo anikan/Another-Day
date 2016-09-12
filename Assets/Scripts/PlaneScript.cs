@@ -23,6 +23,7 @@ public class PlaneScript : ActivatableObject {
         //Trigger the effect if not previously triggered this activation.
         if (isActive && !triggered)
         {
+            OverallStatus.windowChecked = true;
             if (initialBubble != null)
             {
                 initialBubble.GetComponent<TextBubbleScript>().destroy();
