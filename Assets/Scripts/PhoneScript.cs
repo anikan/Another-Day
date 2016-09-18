@@ -43,11 +43,12 @@ public class PhoneScript : ActivatableObject
     // Use this for initialization
     void Start()
     {
-        StartConversation();
+
     }
 
     public void StartConversation()
     {
+        transform.GetChild(0).gameObject.SetActive(true);
         StartCoroutine(Conversation());
     }
 
@@ -57,7 +58,7 @@ public class PhoneScript : ActivatableObject
         //Trigger the effect if not previously triggered this activation.
         if (isActive && !triggered)
         {
-            HighlightTutorial.turnOffTouchPadHL();
+           
             OverallStatus.phoneChecked = true;
 
             triggered = true;
@@ -151,7 +152,9 @@ public class PhoneScript : ActivatableObject
     {
         for (float i = 0; i < .5f; i += Time.deltaTime)
         {
-            activeController.TriggerHapticPulse();
+            if(activeController != null) {
+                activeController.TriggerHapticPulse();
+            }
             yield return null;
         }
         yield return null;
@@ -168,7 +171,7 @@ public class PhoneScript : ActivatableObject
         //Create though bubble for sam.
 
         yield return new WaitForSeconds(1f);
-        GameObject bubble = makeBubble("Probably Sam. \nMaybe worried about me?");
+        GameObject bubble = makeBubble("Probably Sam. \nMaybe worried about me?", new Vector3(0, .5f, 0));
         SendMessage(false, "What's up?");
 
         //Wait for player to pick up phone again.
@@ -182,8 +185,8 @@ public class PhoneScript : ActivatableObject
 
         yield return new WaitForSeconds(1f);
 
-        GameObject choice1 = makeBubble("Fine", new Vector3(-.5f, .1f, .75f));
-        GameObject choice2 = makeBubble("Not feeling well", new Vector3(.5f, .1f, 0.75f));
+        GameObject choice1 = makeBubble("Fine", new Vector3(1f, .1f, .75f));
+        GameObject choice2 = makeBubble("Not feeling well", new Vector3(-1f, .1f, 0.75f));
 
         choice1.GetComponent<TextBubbleScript>().timeAfterDoneToDestroy = 999999;
         choice2.GetComponent<TextBubbleScript>().timeAfterDoneToDestroy = 999999;
@@ -204,6 +207,7 @@ public class PhoneScript : ActivatableObject
         {
             yield return null;
         }
+        HighlightTutorial.turnOffTouchPadHL();
         p = activeController.GetAxis(EVRButtonId.k_EButton_SteamVR_Touchpad);
 
         //Choice has been selected.
@@ -232,14 +236,14 @@ public class PhoneScript : ActivatableObject
 
     IEnumerator FinePart()
     {
-        GameObject bubble = makeBubble("I don't want Sam to worry.");
+        GameObject bubble = makeBubble("I don't want Sam to worry.", new Vector3(0, .5f, 0));
         SendMessage(true, "Oh ha, nothing much. Just... you know... the usual");
         yield return new WaitForSeconds(1f);
 
         SendMessage(false, "Then why haven't you been to classes?");
 
-        GameObject choice1 = makeBubble("Don't worry about it", new Vector3(-.5f, .1f, .75f));
-        GameObject choice2 = makeBubble("Ok", new Vector3(.5f, .1f, 0.75f));
+        GameObject choice1 = makeBubble("Don't worry about it", new Vector3(1f, .1f, .75f));
+        GameObject choice2 = makeBubble("Ok fine", new Vector3(-1f, .1f, 0.75f));
 
         choice1.GetComponent<TextBubbleScript>().timeAfterDoneToDestroy = 999999;
         choice2.GetComponent<TextBubbleScript>().timeAfterDoneToDestroy = 999999;
@@ -277,14 +281,14 @@ public class PhoneScript : ActivatableObject
 
     IEnumerator BadPart()
     {
-        GameObject bubble = makeBubble("Hmm.", new Vector3(0.0f, 1.0f, 0.0f));
+        GameObject bubble = makeBubble("Hmm.", new Vector3(0.0f, .5f, 0.0f));
         SendMessage(true, "Eh, not feeling that great, nothing much going on.");
         yield return new WaitForSeconds(1f);
 
         SendMessage(false, "Oh really, sick?");
 
-        GameObject choice1 = makeBubble("Yeah", new Vector3(-.5f, .1f, .75f));
-        GameObject choice2 = makeBubble("Kinda Empty", new Vector3(.5f, .1f, 0.75f));
+        GameObject choice1 = makeBubble("Yeah", new Vector3(1f, .1f, .75f));
+        GameObject choice2 = makeBubble("Kinda Empty", new Vector3(-1f, .1f, 0.75f));
 
         choice1.GetComponent<TextBubbleScript>().timeAfterDoneToDestroy = 999999;
         choice2.GetComponent<TextBubbleScript>().timeAfterDoneToDestroy = 999999;
@@ -307,6 +311,22 @@ public class PhoneScript : ActivatableObject
         choice1.GetComponent<TextBubbleScript>().destroy();
         choice2.GetComponent<TextBubbleScript>().destroy();
 
+        if(p.x < -.5f) {
+            SendMessage(true, "Yeah, but it's not like being sad or anything.");
+            yield return new WaitForSeconds(1f);
+
+            SendMessage(true, "It's just feeling kinda empty");
+
+        }
+
+        else if(p.x > .5f) {
+            SendMessage(true, "No, just.");
+            yield return new WaitForSeconds(1f);
+
+            SendMessage(true, "Kinda empty.");
+
+        }
+
         //Choice doesn't matter.
 
         SendMessage(false, "Still? Can't you snap out of it.");
@@ -317,46 +337,47 @@ public class PhoneScript : ActivatableObject
     IEnumerator DontWorryPart()
     {
         SendMessage(true, "Don't worry about it.");
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(1.5f);
         SendMessage(true, "Argh You can be so annoying!");
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(1.5f);
         SendMessage(true, "Would you stop! I'm fine!.");
-        GameObject bubble = makeBubble("Dang that was harsher than I intended.", new Vector3(0.0f, 1.0f, 0.0f));
-        yield return new WaitForSeconds(1f);
+        GameObject bubble = makeBubble("Dang that was harsher than I intended.", new Vector3(0.0f, .5f, 0.0f));
+        yield return new WaitForSeconds(4f);
 
         SendMessage(true, "I'm sorry");
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1.5f);
         SendMessage(true, "I can't do anything right, can I");
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
 
         SendMessage(false, "No!");
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(1f);
 
         SendMessage(false, "It's ok, I forgot");
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(1f);
 
         SendMessage(false, "I need to be more careful about what I say.");
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(1f);
 
         SendMessage(false, "If you need to talk, I'm here for you.");
-        yield return new WaitForSeconds(.5f);
 
         bubble.GetComponent<TextBubbleScript>().destroy();
 
-        bubble = makeBubble("Why are they bothering?", new Vector3(0.0f, 1.0f, 0.0f));
+        bubble = makeBubble("Why are they bothering?", new Vector3(0.0f, .5f, 0.0f));
+
+        yield return new WaitForSeconds(2f);
 
         SendMessage(true, "Thanks I guess");
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(1f);
 
         SendMessage(true, "For now I think I'm gonna rest more");
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(1f);
 
         SendMessage(true, "Bye");
         yield return new WaitForSeconds(2f);
 
         SendMessage(false, "Catch you later!");
 
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(1f);
 
         SendMessage(false, "And remember to hold on, at least for another day!");
     }
