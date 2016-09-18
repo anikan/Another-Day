@@ -14,6 +14,11 @@ public class GrabbableVive: MonoBehaviour {
 
     public float soundThreshold = .5f;
 
+    public bool goToDesiredLocationOnController;
+
+    public Vector3 desiredLocation;
+    public Vector3 desiredRotation;
+
 	public void onHover()
     {
         GetComponent<HighlightChildrenScript>().makeTransparent();

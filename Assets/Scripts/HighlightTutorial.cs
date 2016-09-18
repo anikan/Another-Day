@@ -6,15 +6,29 @@ public static class HighlightTutorial {
     public static List<GameObject> grab = new List<GameObject>();
     public static List<GameObject> touchpad = new List<GameObject>();
 
+    private static GameObject triggerObject;
+    private static GameObject trackpadObject;
+
+    /// <summary>
+    /// Get the trigger and touchpad objects from resources.
+    /// </summary>
+    public static void setup()
+    {
+        triggerObject = Resources.Load("Vive Models\\trigger.obj") as GameObject;
+        trackpadObject = Resources.Load("Vive Models\\trackpad.obj") as GameObject;
+    }
 
     public static void turnOnGrabHL(GameObject controller) {
+        //GameObject x = GameObject.CreatePrimitive(PrimitiveType.Sphere);
 
+        GameObject trigger = GameObject.Instantiate<GameObject>(triggerObject);
 
-        GameObject x = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        x.transform.SetParent(controller.transform);
-        x.transform.localPosition = new Vector3(0, -.03f, -.04f);
-        x.transform.localScale = new Vector3(.01f, .01f, .01f);
-         x.GetComponent<Renderer>().material = Resources.Load("color") as Material;
+        trigger.transform.SetParent(controller.transform);
+        trigger.transform.localPosition = new Vector3(0, -.03f, -.04f);
+        trigger.transform.localScale = new Vector3(.01f, .01f, .01f);
+        trigger.GetComponent<Renderer>().material = Resources.Load("color") as Material;
+
+        /*
         GameObject light = new GameObject();
         light.transform.SetParent(x.transform);
         Light l = light.AddComponent<Light>();
@@ -24,10 +38,9 @@ public static class HighlightTutorial {
         l.range = .5f;
         light.transform.localPosition = new Vector3(0, -3.5f, -1.6f);
         Quaternion xy = Quaternion.Euler(-68.63f, 0, 0);
-        light.transform.localRotation = xy;
+        light.transform.localRotation = xy;*/
 
-
-        grab.Add(x);
+        grab.Add(trigger);
     }
     public static void turnOffGrabHL() {
         foreach(var item in grab) {

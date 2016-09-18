@@ -2,7 +2,6 @@
 using System.Collections;
 
 //TODO: Fix Sticky bug: Throw something too hard and the hand will still have it selected. Probably too fast for OnTriggerExit to catch it. Currently ignoring.
-//TODO HACKATHON: ALLOW OBJECTS WITH ONLY ACTIVATABLE OBJECT TO BE SELECTED WITHOUT GRABBED.
 
 [RequireComponent(typeof(SteamVR_TrackedObject))]
 public class GrabScriptVive : MonoBehaviour
@@ -27,6 +26,8 @@ public class GrabScriptVive : MonoBehaviour
     void Awake()
     {
         trackedObj = GetComponent<SteamVR_TrackedObject>();
+
+        HighlightTutorial.setup();
         HighlightTutorial.turnOnGrabHL(this.gameObject);
       
     }
