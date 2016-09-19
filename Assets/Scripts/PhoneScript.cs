@@ -35,8 +35,7 @@ public class PhoneScript : ActivatableObject
     bool convoStarted = false;
 
     //True when conversation is finished. Used for new dialogue for things.
-    bool convoFinished = true;
-
+    bool convoFinished = false;
 
     public GameObject thing;
 
@@ -49,11 +48,12 @@ public class PhoneScript : ActivatableObject
     // Use this for initialization
     void Start()
     {
-        StartConversation();
+
     }
 
     public void StartConversation()
     {
+        transform.GetChild(0).gameObject.SetActive(true);
         StartCoroutine(Conversation());
     }
 
@@ -63,7 +63,7 @@ public class PhoneScript : ActivatableObject
         //Trigger the effect if not previously triggered this activation.
         if (isActive && !triggered)
         {
-            HighlightTutorial.turnOffTouchPadHL();
+           
             OverallStatus.phoneChecked = true;
 
             triggered = true;
@@ -172,7 +172,9 @@ public class PhoneScript : ActivatableObject
     {
         for (float i = 0; i < .5f; i += Time.deltaTime)
         {
-            activeController.TriggerHapticPulse();
+            if(activeController != null) {
+                activeController.TriggerHapticPulse();
+            }
             yield return null;
         }
         yield return null;
@@ -229,6 +231,8 @@ public class PhoneScript : ActivatableObject
         {
             yield return null;
         }
+
+        HighlightTutorial.turnOffTouchPadHL();
 
         if (activeController != null)
         {
@@ -296,65 +300,84 @@ public class PhoneScript : ActivatableObject
 
     IEnumerator BadPart()
     {
-        GameObject bubble = makeBubble("Hmm.", new Vector3(0.0f, 1.0f, 0.0f));
+        GameObject bubble = makeBubble("Hmm.", new Vector3(0.0f, .5f, 0.0f));
         SendMessage(true, "Eh, not feeling that great, nothing much going on.");
         yield return new WaitForSeconds(1f);
 
         SendMessage(false, "Oh really, sick?");
 
-        //Go to dont worry or bad parts.
-        yield return DoOption("Yeah", "Kinda Empty", DontWorryPart, DontWorryPart, bubble);
-
-        //Choice doesn't matter.
-
+        //Go to dont sick or empty parts.
+        yield return DoOption("Yeah", "Kinda Empty", SickPart, EmptyPart, bubble);
 
     }
 
+    IEnumerator SickPart()
+    {
+        SendMessage(true, "Yeah, but it's not like being sad or anything.");
+        yield return new WaitForSeconds(1f);
+
+        SendMessage(true, "It's just feeling kinda empty");
+
+        yield return DontWorryPart();
+    }
+
+
+    IEnumerator EmptyPart()
+    {
+        SendMessage(true, "No, just.");
+        yield return new WaitForSeconds(1f);
+
+        SendMessage(true, "Kinda empty.");
+
+        yield return DontWorryPart();
+    }
+    
     IEnumerator DontWorryPart()
     {
         SendMessage(false, "Still? Can't you snap out of it.");
 
         SendMessage(true, "Don't worry about it.");
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(1.5f);
         SendMessage(true, "Argh You can be so annoying!");
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(1.5f);
         SendMessage(true, "Would you stop! I'm fine!.");
-        GameObject bubble = makeBubble("Dang that was harsher than I intended.", new Vector3(0.0f, 1.0f, 0.0f));
-        yield return new WaitForSeconds(1f);
+        GameObject bubble = makeBubble("Dang that was harsher than I intended.", new Vector3(0.0f, .5f, 0.0f));
+        yield return new WaitForSeconds(4f);
 
         SendMessage(true, "I'm sorry");
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1.5f);
         SendMessage(true, "I can't do anything right, can I");
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
 
         SendMessage(false, "No!");
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(1f);
 
         SendMessage(false, "It's ok, I forgot");
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(1f);
 
         SendMessage(false, "I need to be more careful about what I say.");
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(1f);
 
         SendMessage(false, "If you need to talk, I'm here for you.");
-        yield return new WaitForSeconds(.5f);
 
         bubble.GetComponent<TextBubbleScript>().destroy();
 
-        bubble = makeBubble("Why are they bothering?", new Vector3(0.0f, 1.0f, 0.0f));
+        bubble = makeBubble("Why are they bothering?", new Vector3(0.0f, .5f, 0.0f));
+
+        yield return new WaitForSeconds(2f);
 
         SendMessage(true, "Thanks I guess");
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(1f);
 
         SendMessage(true, "For now I think I'm gonna rest more");
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(1f);
 
         SendMessage(true, "Bye");
         yield return new WaitForSeconds(2f);
 
         SendMessage(false, "Catch you later!");
 
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(1f);
 
         SendMessage(false, "And remember to hold on, at least for another day!");
     }

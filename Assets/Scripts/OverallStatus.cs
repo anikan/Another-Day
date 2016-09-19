@@ -30,6 +30,8 @@ public class OverallStatus : MonoBehaviour
     {
         playerCamera = GameObject.Find("Camera (eye)");
         textBubblePrefab = textBubblePrefabLocal;
+
+        StartCoroutine(WaitForObjectsChecked());
     }
 
     // Update is called once per frame
@@ -46,6 +48,7 @@ public class OverallStatus : MonoBehaviour
         //While something still needs to be checked, wait.
         while (!(knifeChecked && windowChecked && guitarChecked && diaryChecked && textbookChecked && phoneChecked))
         {
+            print(knifeChecked + " " + windowChecked + " " + guitarChecked + " " + diaryChecked + " " + textbookChecked + " " + phoneChecked);
             yield return new WaitForSeconds(.1f);
         }
 
