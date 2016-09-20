@@ -24,6 +24,7 @@ public abstract class ActivatableObject : MonoBehaviour {
     }
 
     public void Activate() {
+        DepressionFogScript.instance.makeFogBubble();
         isActive = true;
     }
 
@@ -59,7 +60,7 @@ public abstract class ActivatableObject : MonoBehaviour {
     /// <param name="offset"></param>
     public GameObject makeBubble(string message, Vector3 offset) {
         //Create the bubble above the object.
-        GameObject bubble = (GameObject)GameObject.Instantiate(OverallStatus.textBubblePrefab, transform.position, new Quaternion());
+        GameObject bubble = Instantiate(OverallStatus.textBubblePrefab, transform.position, new Quaternion()) as GameObject;
 
         bubble.GetComponent<TextBubbleScript>().fullMessage = message;
 

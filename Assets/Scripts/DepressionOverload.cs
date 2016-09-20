@@ -28,7 +28,6 @@ public class DepressionOverload : MonoBehaviour {
 
 	  if (Time.time >= endTime) {
 
-	    Debug.Log("SET");
 	    this.gameObject.SetActive(false);
 
 	  }
