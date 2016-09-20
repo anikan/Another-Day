@@ -14,8 +14,8 @@ public static class HighlightTutorial {
     /// </summary>
     public static void setup()
     {
-        triggerObject = Resources.Load("Vive Models\\trigger.obj") as GameObject;
-        trackpadObject = Resources.Load("Vive Models\\trackpad.obj") as GameObject;
+        triggerObject = Resources.Load("Vive Models\\trigger") as GameObject;
+        trackpadObject = Resources.Load("Vive Models\\trackpad") as GameObject;
     }
 
     public static void turnOnGrabHL(GameObject controller) {
@@ -26,7 +26,7 @@ public static class HighlightTutorial {
         trigger.transform.SetParent(controller.transform);
         trigger.transform.localPosition = new Vector3(0, -.03f, -.04f);
         trigger.transform.localScale = new Vector3(.01f, .01f, .01f);
-        trigger.GetComponent<Renderer>().material = Resources.Load("color") as Material;
+        trigger.GetComponentInChildren<Renderer>().material = Resources.Load("color") as Material;
 
         /*
         GameObject light = new GameObject();
@@ -50,23 +50,26 @@ public static class HighlightTutorial {
 
     public static void turnOnTouchPadHL(GameObject controller) {
         for(int i = 0; i < 2; i++) {
-            GameObject x = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            x.transform.SetParent(controller.transform);
-            x.transform.localPosition = (i == 0 ? new Vector3(.0175f,.0063f, -.0503f) : new Vector3(-.016f, .0063f, -.0503f));
-            x.transform.localScale = new Vector3(.01f, .01f, .01f);
-            x.GetComponent<Renderer>().material = (i == 0 ? Resources.Load("color1") as Material: Resources.Load("color") as Material);
-            GameObject light = new GameObject();
-            light.transform.SetParent(x.transform);
-            Light l = light.AddComponent<Light>();
-            l.type = LightType.Spot;
-            l.spotAngle = 25;
-            l.intensity = 4f;
-            l.range = .2f;
-            light.transform.localPosition = new Vector3(0, 2.7f,0);
-            Quaternion xy = Quaternion.Euler(90, 0, 0);
-            light.transform.localRotation = xy;
 
-            touchpad.Add(x);
+            GameObject trackPad = GameObject.Instantiate<GameObject>(trackpadObject);
+
+            trackPad.transform.SetParent(controller.transform);
+            trackPad.transform.localPosition = (i == 0 ? new Vector3(.0175f,.0063f, -.0503f) : new Vector3(-.016f, .0063f, -.0503f));
+            trackPad.transform.localScale = new Vector3(.01f, .01f, .01f);
+            trackPad.GetComponentInChildren<Renderer>().material = (i == 0 ? Resources.Load("color1") as Material: Resources.Load("color") as Material);
+
+            //GameObject light = new GameObject();
+            //light.transform.SetParent(x.transform);
+            //Light l = light.AddComponent<Light>();
+            //l.type = LightType.Spot;
+            //l.spotAngle = 25;
+            //l.intensity = 4f;
+            //l.range = .2f;
+            //light.transform.localPosition = new Vector3(0, 2.7f,0);
+            //Quaternion xy = Quaternion.Euler(90, 0, 0);
+            //light.transform.localRotation = xy;
+
+            touchpad.Add(trackPad);
         }
     }
 
