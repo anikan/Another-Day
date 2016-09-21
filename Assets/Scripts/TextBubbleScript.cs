@@ -36,6 +36,10 @@ public class TextBubbleScript : MonoBehaviour
         fullMessage = fullMessage.Replace("\\n", "\n");
         animator = GetComponent<Animator>();
 
+        resizeBubble();
+    }
+
+    public void resizeBubble() {
         //Temporarily setting the message in order to get the preferred height.
         textBox.text = fullMessage;
 
@@ -47,8 +51,7 @@ public class TextBubbleScript : MonoBehaviour
         //Stores the new size for UI elements.
         Vector2 newRectSize;
 
-        for (int i = 0; i < bubbleSprites.Length; i++)
-        {
+        for(int i = 0; i < bubbleSprites.Length; i++) {
             RectTransform messageRect = bubbleSprites[i].GetComponent<RectTransform>();
 
             newRectSize = messageRect.sizeDelta;
@@ -56,7 +59,6 @@ public class TextBubbleScript : MonoBehaviour
 
             messageRect.sizeDelta = new Vector2(newRectSize.x, newRectSize.y);
         }
-
 
         //Text
         newRectSize = textBox.rectTransform.sizeDelta;

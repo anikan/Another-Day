@@ -78,7 +78,7 @@ public class DepressionFogScript : MonoBehaviour
 
         SpringJoint joint = gameObject.AddComponent<SpringJoint>();
         joint.connectedBody = bubble.GetComponent<Rigidbody>();
-        joint.spring = .5f;
+        joint.spring = .25f;
         joint.damper = 10f;
         //joint.maxDistance = 3;
         joint.anchor = new Vector3(0.0f, 0.0f, 0.0f);

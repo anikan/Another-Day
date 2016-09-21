@@ -49,7 +49,6 @@ public class PhoneScript : ActivatableObject {
 
     // Use this for initialization
     void Start() {
-        //StartConversation();
     }
 
     public void StartConversation() {
@@ -196,9 +195,11 @@ public class PhoneScript : ActivatableObject {
     /// <param name="bubbleObject">Bubble object from current dialogue, if set.</param>
     /// <returns></returns>
     IEnumerator DoOption(string textLeft, string textRight, Func<IEnumerator> leftChoice, Func<IEnumerator> rightChoice, GameObject bubbleObject) {
-        GameObject choice1 = makeBubble(textLeft, new Vector3(2f, .5f, 0f));
-        GameObject choice2 = makeBubble(textRight, new Vector3(-2f, .5f, 0f));
+        GameObject choice1 = makeBubble(textLeft, new Vector3(.5f, -.475f, 0f));
+        GameObject choice2 = makeBubble(textRight, new Vector3(-.5f, -.475f, 0f));
 
+        choice1.transform.localScale = choice1.transform.localScale * .15f;
+        choice2.transform.localScale = choice2.transform.localScale * .15f;
 
         Image[] choice1Images = choice1.GetComponentsInChildren<Image>();
         for(int i = 0; i < choice1Images.Length; i++) { 
@@ -260,7 +261,9 @@ public class PhoneScript : ActivatableObject {
         SendMessage(false, "Hey, I haven't seen you in a while");
         //Create though bubble for sam.
 
-        GameObject bubble = makeBubble("Probably Sam. \nMaybe worried about me?", new Vector3(0f, 2.0f, 0.0f));
+        GameObject bubble = makeBubble("Probably Sam. \nMaybe worried about me?", new Vector3(0f, .8f, 0.0f));
+        bubble.transform.localScale = bubble.transform.localScale * .15f;
+
         yield return SendMessage(false, "What's up?", 1f);
 
         //Wait for player to pick up phone again.
@@ -286,7 +289,9 @@ public class PhoneScript : ActivatableObject {
     }
 
     IEnumerator FinePart() {
-        GameObject bubble = makeBubble("I don't want Sam to worry.", new Vector3(0f, 2.0f, 0.0f));
+        GameObject bubble = makeBubble("I don't want Sam to worry.", new Vector3(0f, .8f, 0.0f));
+        bubble.transform.localScale = bubble.transform.localScale * .15f;
+
         SendMessage(true, "Oh ha, nothing much. Just... you know... the usual");
 
         yield return SendMessage(false, "Then why haven't you been to classes?", 1.0f);
@@ -296,7 +301,9 @@ public class PhoneScript : ActivatableObject {
     }
 
     IEnumerator BadPart() {
-        GameObject bubble = makeBubble("Hmm.", new Vector3(0f, 2.0f, 0.0f));
+        GameObject bubble = makeBubble("Hmm.", new Vector3(0f, .8f, 0.0f));
+        bubble.transform.localScale = bubble.transform.localScale * .15f;
+
         SendMessage(true, "Eh, not feeling that great, nothing much going on.");
 
         yield return SendMessage(false, "Oh really, sick?", 1.0f);
@@ -335,7 +342,9 @@ public class PhoneScript : ActivatableObject {
         yield return SendMessage(true, "Argh You can be so annoying!", 1.5f);
         yield return SendMessage(true, "Would you stop! I'm fine!.", 1.5f);
 
-        GameObject bubble = makeBubble("Dang that was harsher than I intended.", new Vector3(0f, 2.0f, 0.0f));
+        GameObject bubble = makeBubble("Dang that was harsher than I intended.", new Vector3(0f, .8f, 0.0f));
+        bubble.transform.localScale = bubble.transform.localScale * .15f;
+
 
         yield return SendMessage(true, "I'm sorry", 5f);
         yield return SendMessage(true, "I can't do anything right, can I", 1.5f);
@@ -348,7 +357,9 @@ public class PhoneScript : ActivatableObject {
 
         bubble.GetComponent<TextBubbleScript>().destroy();
 
-        bubble = makeBubble("Why are they bothering?", new Vector3(0f, 2.0f, 0.0f));
+        bubble = makeBubble("Why are they bothering?", new Vector3(0f, .8f, 0.0f));
+        bubble.transform.localScale = bubble.transform.localScale * .15f;
+
 
         yield return SendMessage(true, "You just took that from a depression website didn't you", 2.0f);
 
@@ -357,7 +368,9 @@ public class PhoneScript : ActivatableObject {
         yield return SendMessage(false, "Yes", 1.0f);
         yield return SendMessage(false, "But I'm trying to help you!", 1.0f);
 
-        bubble = makeBubble("Really?", new Vector3(0f, 2.0f, 0.0f));
+        bubble = makeBubble("Really?", new Vector3(0f, .8f, 0.0f));
+        bubble.transform.localScale = bubble.transform.localScale * .15f;
+
 
         yield return SendMessage(true, "Talking like this just numbs the pain", 5.0f);
         yield return SendMessage(true, "Having to act like a normal person... it distracts me from myself", 2.5f);
