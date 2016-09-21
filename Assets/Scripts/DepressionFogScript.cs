@@ -76,13 +76,14 @@ public class DepressionFogScript : MonoBehaviour
         bubble.GetComponent<Rigidbody>().drag = 0f;
         bubble.transform.SetParent(transform, true);
         bubble.transform.localPosition = new Vector3(0,0, sphereRadius);
-        bubble.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(Random.Range(-2.5f, 2.5f), Random.Range(-.10f, .10f), 0.0f), ForceMode.Impulse);
-        Debug.Log(bubble.GetComponent<Rigidbody>().velocity);
+
+        bubble.GetComponent<Rigidbody>().AddForce(transform.InverseTransformDirection(new Vector3(Random.Range(-.05f, .05f), Random.Range(-.05f, .05f), 0.0f)), ForceMode.Impulse);
+        
         bubble.transform.SetParent(null);
 
         SpringJoint joint = gameObject.AddComponent<SpringJoint>();
         joint.connectedBody = bubble.GetComponent<Rigidbody>();
-        joint.spring = 1f;
+        joint.spring = .5f;
         joint.damper = 10f;
         //joint.maxDistance = 3;
         joint.anchor = new Vector3(0.0f, 0.0f, 0.0f);
