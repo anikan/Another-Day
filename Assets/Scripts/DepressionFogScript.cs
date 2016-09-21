@@ -21,7 +21,7 @@ public class DepressionFogScript : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        print("staerof");
+
         quotes = new List<string>();
         quotes.Add("Now I'm just wallowing in self pity");
         quotes.Add("I can't do anything right");
@@ -62,7 +62,7 @@ public class DepressionFogScript : MonoBehaviour
         //Create the bubble above the object.
         GameObject bubble = Instantiate(OverallStatus.textBubblePrefab, this.transform.position, new Quaternion()) as GameObject;
 
-        if(bubble != null && quotes != null) {\
+        if(bubble != null && quotes != null) {
 
             bubble.GetComponent<TextBubbleScript>().fullMessage = quotes[Random.Range(0, quotes.Count)];
 

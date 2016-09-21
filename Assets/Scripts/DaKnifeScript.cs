@@ -22,6 +22,7 @@ public class DaKnifeScript : ActivatableObject {
 
             makeBubble(message);
 
+            base.Activate();
         }
     }
 }
