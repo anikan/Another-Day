@@ -1,11 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class OverallStatus : MonoBehaviour
-{
+public class OverallStatus : MonoBehaviour {
 
-    public enum phoneCompleted
-    {
+    public enum phoneCompleted {
         Nothing, Fine, Help, Ignore
     };
 
@@ -29,8 +27,7 @@ public class OverallStatus : MonoBehaviour
     private IEnumerator objectCheckEnumerator;
 
     // Use this for initialization
-    void Awake()
-    {
+    void Awake() {
         if(instance == null) {
 
             instance = this;
@@ -45,19 +42,16 @@ public class OverallStatus : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         guiCam.transform.position = playerCamera.transform.position;
 
         //  print(guiCam.transform.position + " " + playerCamera.transform.position);
         guiCam.transform.rotation = playerCamera.transform.rotation;
     }
 
-    IEnumerator WaitForObjectsChecked()
-    {
+    IEnumerator WaitForObjectsChecked() {
         //While something still needs to be checked, wait.
-        while (!(knifeChecked && windowChecked && guitarChecked && diaryChecked && textbookChecked && phoneChecked))
-        {
+        while(!(isAllChecked())) {
             yield return new WaitForSeconds(.1f);
         }
 
@@ -73,5 +67,11 @@ public class OverallStatus : MonoBehaviour
 
     public static bool isPhoneLast() {
         return knifeChecked && windowChecked && guitarChecked && diaryChecked && textbookChecked && !phoneChecked;
+    }
+
+
+    public static bool isAllChecked() {
+        return knifeChecked && windowChecked && guitarChecked && diaryChecked && textbookChecked && phoneChecked;
+
     }
 }
