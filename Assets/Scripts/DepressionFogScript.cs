@@ -21,25 +21,26 @@ public class DepressionFogScript : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
         quotes = new List<string>();
-        quotes.Add("Now I'm just wallowing in self pity");
         quotes.Add("I can't do anything right");
-        quotes.Add("Why bother, I'm doomed anyways");
+        quotes.Add("Why bother?");
         quotes.Add("I can't trust anyone");
-        quotes.Add("I'm a terrible child");
         quotes.Add("I'm a terrible friend");
-        quotes.Add("I'm a terrible sibling");
         quotes.Add("Why can't I stop thinking like this");
         quotes.Add("I need a break from everything");
-        quotes.Add("I don't deserve what I have");
         quotes.Add("My friends would be better off without me");
-        quotes.Add("My friends probably merely tolerate me");
-        quotes.Add("I don't want to go back to pretending to be happy and normal");
+        quotes.Add("I don't want to go back to pretending");
         quotes.Add("I'm just a problem to those close to me");
-        quotes.Add("I will die having done nothing useful in the end");
         quotes.Add("I shouldn't have gotten so close to my friends");
         quotes.Add("I'm so self-centered");
+        quotes.Add("Why did I wake up?");
+        quotes.Add("I want to escape");
+        quotes.Add("Everything is dull");
+        quotes.Add("Nobody understands");
+        quotes.Add("Leave me alone");
+        quotes.Add("I feel heavy");
+        quotes.Add("No one cares");
+        quotes.Add("I'm just a disappointment");
     }
 
     // Update is called once per frame
@@ -64,8 +65,9 @@ public class DepressionFogScript : MonoBehaviour
 
         if(bubble != null && quotes != null) {
 
-            bubble.GetComponent<TextBubbleScript>().fullMessage = quotes[Random.Range(0, quotes.Count)];
-
+            int index = Random.Range(0, quotes.Count);
+            bubble.GetComponent<TextBubbleScript>().fullMessage = quotes[index];
+            quotes.RemoveAt(index);
         }
 
         bubble.GetComponent<Rigidbody>().drag = 0f;

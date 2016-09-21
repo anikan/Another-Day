@@ -24,6 +24,7 @@ public abstract class ActivatableObject : MonoBehaviour {
     public virtual void Activate() {
         if(!triggered) {
             DepressionFogScript.instance.makeFogBubble();
+            DepressionFogScript.instance.makeFogBubble();
             triggered = true;
         }
     }

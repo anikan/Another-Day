@@ -18,7 +18,7 @@ public class DoorScript : ActivatableObject {
         if(!triggered) {
             numTimes++;
 
-            makeBubble(message);
+            makeBubble(message, new Vector3(0.0f, 0.0f, 0.0f));
             OverallStatus.doorChecked = true;
 
             base.Activate();
