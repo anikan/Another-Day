@@ -51,9 +51,6 @@ public class GrabScriptVive : MonoBehaviour
                     GameObject grabbedObject = currentlySelectedObject;
                     grabbedObject.GetComponent<GrabbableVive>().onGrab();
 
-                    joint = grabbedObject.AddComponent<FixedJoint>();
-                    joint.connectedBody = this.gameObject.GetComponent<Rigidbody>();
-
                     //For another day in particular. Trigger stuff on grab:
                     ActivatableObject aObject = currentlySelectedObject.GetComponent<ActivatableObject>();
                     if(aObject != null) {
@@ -65,15 +62,28 @@ public class GrabScriptVive : MonoBehaviour
                             phone.activeController = device;
                             phone.thing = gameObject;
 
-                            //grabbedObject.transform.position = transform.position;
-                            //grabbedObject.transform.rotation = transform.rotation;
+                            grabbedObject.transform.SetParent(transform);
 
+                            grabbedObject.transform.localPosition = new Vector3(0.0f,.01f,.1f);
+
+                            //Vector3 rotation = transform.rotation.eulerAngles;
+                            //print (rotation);
+                            Vector3 rotation = new Vector3(-90, -90, -90);
+                            print(rotation);
+
+                            grabbedObject.transform.localRotation = Quaternion.Euler(rotation);
+
+                            grabbedObject.transform.SetParent(null);
 
                         }
                     }
 
+                    joint = grabbedObject.AddComponent<FixedJoint>();
+                    joint.connectedBody = this.gameObject.GetComponent<Rigidbody>();
+
+
                 }
-             
+
                 //Stop grabbing.
                 else if(joint != null && device.GetTouchUp(SteamVR_Controller.ButtonMask.Trigger)) {
 
