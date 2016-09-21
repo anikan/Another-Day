@@ -26,18 +26,15 @@ public class GrabScriptVive : MonoBehaviour
     void Awake()
     {
         trackedObj = GetComponent<SteamVR_TrackedObject>();
-
-     
-      
       
     }
     void Start() {
         HighlightTutorial.instance.turnOnGrabHL(this.gameObject);
+       //HighlightTutorial.instance.turnOnTouchPadHL(this.gameObject);
     }
    
     void Update()
-    {
-      
+    {      
         var device = SteamVR_Controller.Input((int)trackedObj.index);
 
         if (currentlySelectedObject != null)
