@@ -65,12 +65,15 @@ public class PhoneScript : ActivatableObject {
 
     public override void Activate() {
 
+        if(OverallStatus.isPhoneLast()) {
+            OverallStatus.instance.startConversation();
+        }
+
         if(!triggered) {
             OverallStatus.phoneChecked = true;
             initialBubble = makeBubble(message, new Vector3(0.0f, 2.0f, 0.0f));
             base.Activate();
         }
-
 
         if((convoStarted && !triggeredAgain) || OverallStatus.isAllChecked()) {
             triggeredAgain = true;

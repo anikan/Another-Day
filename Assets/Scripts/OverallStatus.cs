@@ -64,7 +64,6 @@ public class OverallStatus : MonoBehaviour {
         MusicScript.instance.stopSong();
         phone.StartConversation();
     }
-
     public static bool isPhoneLast() {
         return knifeChecked && windowChecked && guitarChecked && diaryChecked && textbookChecked && !phoneChecked;
     }
@@ -72,6 +71,5 @@ public class OverallStatus : MonoBehaviour {
 
     public static bool isAllChecked() {
         return knifeChecked && windowChecked && guitarChecked && diaryChecked && textbookChecked && phoneChecked;
-
     }
 }
