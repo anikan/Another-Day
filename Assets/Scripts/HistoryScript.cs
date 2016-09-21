@@ -11,36 +11,21 @@ public class HistoryScript : ActivatableObject {
 	
 	// Update is called once per frame
 	void Update () {
-        //Trigger the effect if not previously triggered this activation.
-        if (isActive && !triggered)
-        {
-            triggered = true;
+
+    }
+
+    public override void Activate() {
+
+        if(!triggered) {
             numTimes++;
 
             makeBubble(message);
 
             OverallStatus.textbookChecked = true;
 
-            /*
-            Vector3 playerPosition = raycastSource.transform.position;
-
-            float distance = Vector3.Magnitude((transform.position - playerPosition) * .8f);
-
-
-                        
-            //Create the bubble halfway between the object and the player.
-            GameObject bubble = (GameObject)GameObject.Instantiate(textBubblePrefab, playerPosition + distance * raycastSource.transform.forward, new Quaternion());
-
-            bubble.GetComponent<TextBubbleScript>().fullMessage = message;
-            */
-
+            base.Activate();
 
         }
 
-        //Turn off the triggering
-        else if (!isActive && triggered)
-        {
-            triggered = false;
-        }
     }
 }

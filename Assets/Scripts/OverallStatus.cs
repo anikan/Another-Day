@@ -22,8 +22,7 @@ public class OverallStatus : MonoBehaviour
     public static bool diaryChecked;
     public static bool textbookChecked;
     public static bool phoneChecked;
-
-
+    public static bool doorChecked;
     
     // Use this for initialization
     void Awake()

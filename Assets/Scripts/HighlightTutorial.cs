@@ -12,9 +12,9 @@ public class HighlightTutorial:MonoBehaviour {
 
     void Awake() {
         instance = this;
-        print("awake");
+        //print("awake");
     
-        print(touchpad.Count);
+        //print(touchpad.Count);
       
     }
 
@@ -22,7 +22,7 @@ public class HighlightTutorial:MonoBehaviour {
 
     public void turnOnGrabHL(GameObject controller) {
         foreach(var item in grab) {
-            print("here1");
+            //print("here1");
             item.SetActive(true);
             StartCoroutine(GreenLerp(item));
         }
@@ -34,7 +34,7 @@ public class HighlightTutorial:MonoBehaviour {
     }
 
     public void turnOnTouchPadHL(GameObject controller) {
-        print("here");
+        //print("here");
         foreach(var item in touchpad) {
             item.SetActive(true);
             switch(item.tag) {
@@ -64,13 +64,13 @@ public class HighlightTutorial:MonoBehaviour {
         while(true) {
             
             for(float i = 0; i < time; i += Time.deltaTime) {
-                item.GetComponent<Renderer>().material.color = Color.Lerp(Color.black, Color.green, i / time);
-                print("LERPING");
+                item.GetComponentInChildren<Renderer>().material.color = Color.Lerp(Color.black, Color.green, i / time);
+                //print("LERPING");
                 yield return null;
             }
             for(float i = 0; i < time; i += Time.deltaTime) {
-                print("LERPING");
-                item.GetComponent<Renderer>().material.color = Color.Lerp(Color.green, Color.black, i / time);
+                //print("LERPING");
+                item.GetComponentInChildren<Renderer>().material.color = Color.Lerp(Color.green, Color.black, i / time);
                 yield return null;
             }
            

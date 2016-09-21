@@ -5,8 +5,7 @@ using UnityEngine.UI;
 using Valve.VR;
 using System;
 
-public class PhoneScript : ActivatableObject
-{
+public class PhoneScript : ActivatableObject {
     //The content where scroll view objects go.
     public GameObject contentCanvas;
 
@@ -39,49 +38,39 @@ public class PhoneScript : ActivatableObject
 
     public GameObject thing;
 
-
     public string message = "I don't really want to talk to anyone.";
-
 
     public SteamVR_Controller.Device activeController;
 
     // Use this for initialization
-    void Start()
-    {
+    void Start() {
 
     }
 
-    public void StartConversation()
-    {
+    public void StartConversation() {
         transform.GetChild(0).gameObject.SetActive(true);
         StartCoroutine(Conversation());
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        //Trigger the effect if not previously triggered this activation.
-        if (isActive && !triggered)
-        {
-           
+    void Update() {
+
+        if(Input.GetKeyDown(KeyCode.A)) {
+            SendMessage(true, "H nackasd,l;a");
+        }
+    }
+
+    public override void Activate() {
+        if(!triggered) {
             OverallStatus.phoneChecked = true;
-
-            triggered = true;
-
             makeBubble(message);
-
+            base.Activate();
         }
 
-        //Trigger the effect if not previously triggered this activation.
-        if (isActive && convoStarted && !triggeredAgain)
-        {
+        else if(convoStarted && !triggeredAgain) {
             triggeredAgain = true;
         }
 
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            SendMessage(true, "H nackasd,l;a");
-        }
     }
 
     /// <summary>
@@ -91,20 +80,17 @@ public class PhoneScript : ActivatableObject
     /// <param name="message"></param>
     /// <param name="timeBeforeMessage"></param>
     /// <returns></returns>
-    IEnumerator SendMessage(bool isOwn, string message, float timeBeforeMessage)
-    {
+    IEnumerator SendMessage(bool isOwn, string message, float timeBeforeMessage) {
         yield return new WaitForSeconds(timeBeforeMessage);
 
         SendMessage(isOwn, message);
     }
 
-    void SendMessage(bool isOwn, string message)
-    {
+    void SendMessage(bool isOwn, string message) {
         GameObject messageObject;
         Vector3 messagePosition;
 
-        if (isOwn)
-        {
+        if(isOwn) {
             messageObject = (GameObject)GameObject.Instantiate(ownMessagePrefab, contentCanvas.transform, true);
             messagePosition = ownMessageStartLocation;
         }
@@ -162,16 +148,14 @@ public class PhoneScript : ActivatableObject
         contentCanvas.GetComponentInParent<ScrollRect>().velocity = new Vector2(0f, 100f);
 
         GetComponent<AudioSource>().Play();
-        if (activeController != null)
+        if(activeController != null)
             StartCoroutine(VibratePhone());
         //TODO
         //Vive vibrate.
     }
 
-    IEnumerator VibratePhone()
-    {
-        for (float i = 0; i < .5f; i += Time.deltaTime)
-        {
+    IEnumerator VibratePhone() {
+        for(float i = 0; i < .5f; i += Time.deltaTime) {
             if(activeController != null) {
                 activeController.TriggerHapticPulse();
             }
@@ -180,8 +164,7 @@ public class PhoneScript : ActivatableObject
         yield return null;
     }
 
-    void HandleWaits()
-    {
+    void HandleWaits() {
 
     }
 
@@ -193,8 +176,7 @@ public class PhoneScript : ActivatableObject
     /// <param name="leftChoice"></param>
     /// <param name="rightChoice"></param>
     /// <returns></returns>
-    IEnumerator DoOption(string textLeft, string textRight, Func<IEnumerator> leftChoice, Func<IEnumerator> rightChoice)
-    {
+    IEnumerator DoOption(string textLeft, string textRight, Func<IEnumerator> leftChoice, Func<IEnumerator> rightChoice) {
         yield return DoOption(textLeft, textRight, leftChoice, rightChoice, null);
     }
 
@@ -208,58 +190,51 @@ public class PhoneScript : ActivatableObject
     /// <param name="rightChoice"> Right method to call</param>
     /// <param name="bubbleObject">Bubble object from current dialogue, if set.</param>
     /// <returns></returns>
-    IEnumerator DoOption(string textLeft, string textRight, Func<IEnumerator> leftChoice, Func<IEnumerator> rightChoice, GameObject bubbleObject)
-    {
+    IEnumerator DoOption(string textLeft, string textRight, Func<IEnumerator> leftChoice, Func<IEnumerator> rightChoice, GameObject bubbleObject) {
         GameObject choice1 = makeBubble(textLeft, new Vector3(-.5f, .1f, .75f));
         GameObject choice2 = makeBubble(textRight, new Vector3(.5f, .1f, 0.75f));
 
         choice1.GetComponent<TextBubbleScript>().timeAfterDoneToDestroy = 999999;
         choice2.GetComponent<TextBubbleScript>().timeAfterDoneToDestroy = 999999;
 
-        if (activeController != null)
+        if(activeController != null)
             HighlightTutorial.instance.turnOnTouchPadHL(thing);
 
-        Vector2 p = new Vector2(0,0);
+        Vector2 p = new Vector2(0, 0);
 
         //Keep looping while no input was received.
 
         //2 main parts. 1 Checks vive. 2 checks mouse. 
-        while ((activeController == null ||
+        while((activeController == null ||
             (!(activeController.GetAxis(EVRButtonId.k_EButton_SteamVR_Touchpad).x < -.5f) &&
             !(activeController.GetAxis(EVRButtonId.k_EButton_SteamVR_Touchpad).x > .5f)) || !activeController.GetPress(SteamVR_Controller.ButtonMask.Touchpad))
-            && (!Input.GetMouseButtonDown(0) && !Input.GetMouseButtonDown(1)))
-        {
+            && (!Input.GetMouseButtonDown(0) && !Input.GetMouseButtonDown(1))) {
             yield return null;
         }
 
         HighlightTutorial.instance.turnOffTouchPadHL();
 
-        if (activeController != null)
-        {
+        if(activeController != null) {
             p = activeController.GetAxis(EVRButtonId.k_EButton_SteamVR_Touchpad);
         }
         //Choice has been selected.
 
-        if (bubbleObject != null)
-        {
+        if(bubbleObject != null) {
             bubbleObject.GetComponent<TextBubbleScript>().destroy();
         }
         choice1.GetComponent<TextBubbleScript>().destroy();
         choice2.GetComponent<TextBubbleScript>().destroy();
 
-        if (p.x < -.5f || Input.GetMouseButtonDown(0))
-        {
+        if(p.x < -.5f || Input.GetMouseButtonDown(0)) {
             yield return leftChoice();
         }
 
-        else if (p.x > .5f || Input.GetMouseButtonDown(1))
-        {
+        else if(p.x > .5f || Input.GetMouseButtonDown(1)) {
             yield return rightChoice();
         }
     }
 
-    IEnumerator Conversation()
-    {
+    IEnumerator Conversation() {
         convoStarted = true;
         SendMessage(false, "Hey, I haven't seen you in a while");
         //Create though bubble for sam.
@@ -268,8 +243,7 @@ public class PhoneScript : ActivatableObject
         yield return SendMessage(false, "What's up?", 1f);
 
         //Wait for player to pick up phone again.
-        while (!triggeredAgain)
-        {
+        while(!triggeredAgain) {
             yield return null;
         }
 
@@ -290,8 +264,7 @@ public class PhoneScript : ActivatableObject
         MusicScript.instance.startNextSong();
     }
 
-    IEnumerator FinePart()
-    {
+    IEnumerator FinePart() {
         GameObject bubble = makeBubble("I don't want Sam to worry.");
         SendMessage(true, "Oh ha, nothing much. Just... you know... the usual");
 
@@ -301,8 +274,7 @@ public class PhoneScript : ActivatableObject
         yield return DoOption("Don't worry about it", "Ok fine", DontWorryPart, BadPart, bubble);
     }
 
-    IEnumerator BadPart()
-    {
+    IEnumerator BadPart() {
         GameObject bubble = makeBubble("Hmm.", new Vector3(0.0f, .5f, 0.0f));
         SendMessage(true, "Eh, not feeling that great, nothing much going on.");
 
@@ -313,22 +285,20 @@ public class PhoneScript : ActivatableObject
 
     }
 
-    IEnumerator SickPart()
-    {
+    IEnumerator SickPart() {
         SendMessage(true, "It's just like.");
 
         yield return SendMessage(true, "You think about how stupid and terrible you are", 1.0f);
         yield return SendMessage(true, "And you can't stop thinking about it", 1.0f);
         yield return SendMessage(true, "And you can't think straight anymore", 1.0f);
-        
+
         yield return SendMessage(false, "But you aren't! Can't you just believe that?", 2.5f);
 
         yield return DontWorryPart();
     }
 
 
-    IEnumerator EmptyPart()
-    {
+    IEnumerator EmptyPart() {
         SendMessage(true, "No, just.");
 
         yield return SendMessage(true, "Kinda empty.", 1.0f);
@@ -337,9 +307,8 @@ public class PhoneScript : ActivatableObject
 
         yield return DontWorryPart();
     }
-    
-    IEnumerator DontWorryPart()
-    {
+
+    IEnumerator DontWorryPart() {
 
         yield return SendMessage(true, "Don't worry about it.", 1.5f);
         yield return SendMessage(true, "Argh You can be so annoying!", 1.5f);
@@ -382,10 +351,8 @@ public class PhoneScript : ActivatableObject
     }
 
 
-    IEnumerator ScrollWindow()
-    {
-        while (true)
-        {
+    IEnumerator ScrollWindow() {
+        while(true) {
             //TODO
             //Vive scroll.
             //Vive code here. Essentially amount of touchpad scroll is velocity.

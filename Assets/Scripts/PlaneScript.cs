@@ -20,12 +20,14 @@ public class PlaneScript : ActivatableObject {
 
     // Update is called once per frame
     void Update () {
-        //Trigger the effect if not previously triggered this activation.
-        if (isActive && !triggered)
-        {
+
+    }
+
+    public override void Activate() {
+
+        if(!triggered) {
             OverallStatus.windowChecked = true;
-            if (initialBubble != null)
-            {
+            if(initialBubble != null) {
                 initialBubble.GetComponent<TextBubbleScript>().destroy();
             }
 
@@ -38,12 +40,8 @@ public class PlaneScript : ActivatableObject {
             MusicScript.instance.startFirstSong();
 
             makeBubble(message);
-        }
+            base.Activate();
 
-        //Turn off the triggering
-        else if (!isActive && triggered)
-        {
-            triggered = false;
         }
     }
 }

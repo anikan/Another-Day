@@ -3,8 +3,6 @@ using System.Collections;
 
 public abstract class ActivatableObject : MonoBehaviour {
 
-    //True while a tap is active and focused on it.
-    public bool isActive;
 
     //True to prevent multiple activations in a single tap.
     //Set this to true the instant it is active, and set it to false when the object is no longer active, ready for the next tap.
@@ -23,26 +21,19 @@ public abstract class ActivatableObject : MonoBehaviour {
     void Update() {
     }
 
-    public void Activate() {
-        DepressionFogScript.instance.makeFogBubble();
-        isActive = true;
+    public virtual void Activate() {
+        if(!triggered) {
+            DepressionFogScript.instance.makeFogBubble();
+            triggered = true;
+        }
     }
 
     public void Deactivate() {
-        isActive = false;
     }
 
     void OnMouseDown()
     {
-        if (!isActive)
-        {
             Activate();
-        }
-
-        else
-        {
-            Deactivate();
-        }
     }
 
     /// <summary>
