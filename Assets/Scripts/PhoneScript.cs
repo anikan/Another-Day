@@ -44,6 +44,8 @@ public class PhoneScript : ActivatableObject {
 
     private GameObject initialBubble;
 
+    public static Color32 leftBubbleColor = new Color32(0x90, 0x91, 0xFF, 0xFF);
+    public static Color32 rightBubbleColor = new Color32(0xFF,0x90,0x90, 0xFF);
 
     // Use this for initialization
     void Start() {
@@ -64,11 +66,6 @@ public class PhoneScript : ActivatableObject {
     }
 
     public override void Activate() {
-
-        if(OverallStatus.isPhoneLast()) {
-            OverallStatus.instance.startConversation();
-        }
-
         if(!triggered) {
             OverallStatus.phoneChecked = true;
             initialBubble = makeBubble(message, new Vector3(0.0f, 2.0f, 0.0f));
@@ -201,6 +198,17 @@ public class PhoneScript : ActivatableObject {
     IEnumerator DoOption(string textLeft, string textRight, Func<IEnumerator> leftChoice, Func<IEnumerator> rightChoice, GameObject bubbleObject) {
         GameObject choice1 = makeBubble(textLeft, new Vector3(2f, .5f, 0f));
         GameObject choice2 = makeBubble(textRight, new Vector3(-2f, .5f, 0f));
+
+
+        Image[] choice1Images = choice1.GetComponentsInChildren<Image>();
+        for(int i = 0; i < choice1Images.Length; i++) { 
+            choice1Images[i].color = leftBubbleColor;
+        }
+
+        Image[] choice2Images = choice2.GetComponentsInChildren<Image>();
+        for(int i = 0; i < choice2Images.Length; i++) {
+            choice2Images[i].color = rightBubbleColor;
+        }
 
         choice1.GetComponent<TextBubbleScript>().timeAfterDoneToDestroy = 999999;
         choice2.GetComponent<TextBubbleScript>().timeAfterDoneToDestroy = 999999;

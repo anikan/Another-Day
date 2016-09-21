@@ -64,6 +64,11 @@ public class GrabScriptVive : MonoBehaviour
                         if(phone != null) {
                             phone.activeController = device;
                             phone.thing = gameObject;
+
+                            //grabbedObject.transform.position = transform.position;
+                            //grabbedObject.transform.rotation = transform.rotation;
+
+
                         }
                     }
 
