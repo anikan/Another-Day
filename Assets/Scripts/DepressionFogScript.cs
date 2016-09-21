@@ -5,18 +5,24 @@ using System.Collections.Generic;
 public class DepressionFogScript : MonoBehaviour
 {
     public static DepressionFogScript instance;
-    private List<string> quotes = new List<string>();
+    private List<string> quotes;
     private float sphereRadius = 2;
     private List<GameObject> bubbleList = new List<GameObject>();
 
     void Awake()
     {
-        instance = this;
+        if (instance == null) {
+
+            instance = this;
+
+        }
     }
 
     // Use this for initialization
     void Start()
     {
+        print("staerof");
+        quotes = new List<string>();
         quotes.Add("Now I'm just wallowing in self pity");
         quotes.Add("I can't do anything right");
         quotes.Add("Why bother, I'm doomed anyways");
@@ -56,8 +62,11 @@ public class DepressionFogScript : MonoBehaviour
         //Create the bubble above the object.
         GameObject bubble = Instantiate(OverallStatus.textBubblePrefab, this.transform.position, new Quaternion()) as GameObject;
 
-        bubble.GetComponent<TextBubbleScript>().fullMessage = quotes[Random.Range(0, quotes.Count)];
+        if(bubble != null && quotes != null) {\
 
+            bubble.GetComponent<TextBubbleScript>().fullMessage = quotes[Random.Range(0, quotes.Count)];
+
+        }
         /*
         float theta = 0, phi = 0;
 

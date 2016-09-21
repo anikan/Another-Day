@@ -18,7 +18,6 @@ public class DaKnifeScript : ActivatableObject {
         if(!triggered) {
             OverallStatus.knifeChecked = true;
 
-            triggered = true;
             numTimes++;
 
             makeBubble(message);

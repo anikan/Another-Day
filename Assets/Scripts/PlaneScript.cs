@@ -24,14 +24,12 @@ public class PlaneScript : ActivatableObject {
     }
 
     public override void Activate() {
-
         if(!triggered) {
             OverallStatus.windowChecked = true;
             if(initialBubble != null) {
                 initialBubble.GetComponent<TextBubbleScript>().destroy();
             }
 
-            triggered = true;
             numTimes++;
 
             directionalLight.SetActive(false);
