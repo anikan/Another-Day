@@ -67,20 +67,6 @@ public class DepressionFogScript : MonoBehaviour
             bubble.GetComponent<TextBubbleScript>().fullMessage = quotes[Random.Range(0, quotes.Count)];
 
         }
-        /*
-        float theta = 0, phi = 0;
-
-        theta = 2 * Mathf.PI * Random.Range(0f, 1f);
-        phi = Mathf.Acos((2f * Random.Range(0f, 1f)) - 1f);
-
-        Vector3 sphereCoords = new Vector3(
-          Mathf.Cos(theta) * Mathf.Sin(phi),
-          Mathf.Sin(theta) * Mathf.Sin(phi),
-          Mathf.Cos(phi));
-
-        sphereCoords *= sphereRadius;
-        //sphereCoords += transform.position;
-        */
 
         bubble.GetComponent<Rigidbody>().drag = 0f;
         bubble.transform.SetParent(transform, true);

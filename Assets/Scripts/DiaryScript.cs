@@ -3,7 +3,7 @@ using System.Collections;
 
 public class DiaryScript : ActivatableObject {
 
-    public string messageOne = "My diary...";
+    public string messageOne = "My notebook...";
     public string messageTwo = "I don't \n write \n anymore";
     // Use this for initialization
     void Start() {

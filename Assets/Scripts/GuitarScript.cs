@@ -26,8 +26,8 @@ public class GuitarScript : ActivatableObject {
         if(!triggered) {
             numTimes++;
 
-            makeBubble(messageOne, new Vector3(-.3f, .25f, 0));
-            makeBubble(messageTwo, new Vector3(.3f, .25f, 0));
+            makeBubble(messageOne, new Vector3(.3f, .25f, 0));
+            makeBubble(messageTwo, new Vector3(-.3f, .25f, 0));
             OverallStatus.guitarChecked = true;
 
             base.Activate();

@@ -64,13 +64,19 @@ public class PhoneScript : ActivatableObject {
     }
 
     public override void Activate() {
+
+        if(OverallStatus.isPhoneLast()) {
+            OverallStatus.instance.startConversation();
+        }
+
         if(!triggered) {
             OverallStatus.phoneChecked = true;
             initialBubble = makeBubble(message, new Vector3(0.0f, 2.0f, 0.0f));
             base.Activate();
         }
 
-        else if(convoStarted && !triggeredAgain) {
+
+        if(convoStarted && !triggeredAgain) {
             triggeredAgain = true;
         }
 
@@ -239,7 +245,7 @@ public class PhoneScript : ActivatableObject {
 
     IEnumerator Conversation() {
 
-        if (initialBubble != null) {
+        if(initialBubble != null) {
             Destroy(initialBubble);
         }
 
@@ -355,7 +361,7 @@ public class PhoneScript : ActivatableObject {
 
         yield return SendMessage(true, "Bye", 2f);
 
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(5.0f);
     }
 
 

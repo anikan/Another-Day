@@ -23,12 +23,23 @@ public class OverallStatus : MonoBehaviour
     public static bool textbookChecked;
     public static bool phoneChecked;
     public static bool doorChecked;
-    
+
+    public static OverallStatus instance;
+
+    private IEnumerator objectCheckEnumerator;
+
     // Use this for initialization
     void Awake()
     {
+        if(instance == null) {
+
+            instance = this;
+        }
+
         playerCamera = GameObject.Find("Camera (eye)");
         textBubblePrefab = textBubblePrefabLocal;
+
+        objectCheckEnumerator = WaitForObjectsChecked();
 
         StartCoroutine(WaitForObjectsChecked());
     }
@@ -50,8 +61,17 @@ public class OverallStatus : MonoBehaviour
             yield return new WaitForSeconds(.1f);
         }
 
+        startConversation();
+
+    }
+
+    public void startConversation() {
+        StopCoroutine(objectCheckEnumerator);
         MusicScript.instance.stopSong();
         phone.StartConversation();
+    }
 
+    public static bool isPhoneLast() {
+        return knifeChecked && windowChecked && guitarChecked && diaryChecked && textbookChecked && !phoneChecked;
     }
 }
