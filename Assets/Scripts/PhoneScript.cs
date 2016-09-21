@@ -217,7 +217,7 @@ public class PhoneScript : ActivatableObject
         choice2.GetComponent<TextBubbleScript>().timeAfterDoneToDestroy = 999999;
 
         if (activeController != null)
-            HighlightTutorial.turnOnTouchPadHL(thing);
+            HighlightTutorial.instance.turnOnTouchPadHL(thing);
 
         Vector2 p = new Vector2(0,0);
 
@@ -232,7 +232,7 @@ public class PhoneScript : ActivatableObject
             yield return null;
         }
 
-        HighlightTutorial.turnOffTouchPadHL();
+        HighlightTutorial.instance.turnOffTouchPadHL();
 
         if (activeController != null)
         {
