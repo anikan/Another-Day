@@ -41,7 +41,7 @@ public abstract class ActivatableObject : MonoBehaviour {
     /// </summary>
     /// <param name="message"></param>
     public GameObject makeBubble(string message) {
-        return makeBubble(message, new Vector3(0, .1f, 0));
+        return makeBubble(message, new Vector3(0f, 0.25f, 0f));
     }
 
     /// <summary>
@@ -55,9 +55,9 @@ public abstract class ActivatableObject : MonoBehaviour {
 
         bubble.GetComponent<TextBubbleScript>().fullMessage = message;
 
-        bubble.transform.SetParent(this.transform, true);
-        bubble.transform.localPosition = offset;
-        bubble.transform.SetParent(null);
+        bubble.transform.SetParent(transform, true);
+        bubble.transform.localPosition += offset;
+        bubble.transform.parent = null;
 
         SpringJoint joint = this.gameObject.AddComponent<SpringJoint>();
         joint.connectedBody = bubble.GetComponent<Rigidbody>();
@@ -65,6 +65,8 @@ public abstract class ActivatableObject : MonoBehaviour {
         joint.damper = 10f;
         //joint.maxDistance = 3;
         joint.anchor = offset;
+        joint.autoConfigureConnectedAnchor = false;
+        joint.connectedAnchor = Vector3.zero;
 
         return bubble;
     }

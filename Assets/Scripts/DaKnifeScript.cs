@@ -20,7 +20,7 @@ public class DaKnifeScript : ActivatableObject {
 
             numTimes++;
 
-            makeBubble(message);
+            makeBubble(message, new Vector3());
 
             base.Activate();
         }

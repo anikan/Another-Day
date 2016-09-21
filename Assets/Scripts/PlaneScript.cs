@@ -14,7 +14,7 @@ public class PlaneScript : ActivatableObject {
     private GameObject initialBubble;
     // Use this for initialization
     void Start () {
-        initialBubble = makeBubble(startMessage);
+        initialBubble = makeBubble(startMessage, new Vector3());
         initialBubble.GetComponent<TextBubbleScript>().timeAfterDoneToDestroy = 999999;
     }
 
@@ -37,7 +37,7 @@ public class PlaneScript : ActivatableObject {
             planeObject.SetActive(false);
             MusicScript.instance.startFirstSong();
 
-            makeBubble(message);
+            makeBubble(message, new Vector3());
             base.Activate();
 
         }
