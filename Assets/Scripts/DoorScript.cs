@@ -20,7 +20,7 @@ public class DoorScript : ActivatableObject {
 
             Vector3 playerPosition = raycastSource.transform.position;
 
-            float distance = Vector3.Magnitude((transform.position - playerPosition) * .8f);
+            float distance = Vector3.Magnitude((transform.position - playerPosition) * .7f);
                 
             //Create the bubble halfway between the object and the player.
             GameObject bubble = (GameObject)GameObject.Instantiate(textBubblePrefab, playerPosition + distance * raycastSource.transform.forward, new Quaternion());
